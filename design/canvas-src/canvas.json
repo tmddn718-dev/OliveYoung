@@ -38,11 +38,11 @@
       "y": 7792
     },
     "CheckoutAsis.dc.html": {
-      "h": 2860,
-      "title": "AS-IS 주문/결제 전체 스크롤",
+      "h": 844,
       "w": 390,
-      "x": 940,
-      "y": 1360
+      "x": 0,
+      "y": 2300,
+      "title": "AS-IS 주문/결제 ① 배송지 · 12:45 선택"
     },
     "CheckoutSlot.dc.html": {
       "h": 844,
@@ -60,10 +60,10 @@
     },
     "DetailAsis.dc.html": {
       "h": 844,
-      "title": "AS-IS 상품 상세 하단",
       "w": 390,
-      "x": 0,
-      "y": 1360
+      "x": 940,
+      "y": 1360,
+      "title": "AS-IS 상품 상세 하단 (오늘드림 선택)"
     },
     "DetailCollapsed.dc.html": {
       "h": 844,
@@ -83,7 +83,7 @@
       "h": 844,
       "title": "AS-IS 옵션 선택 (일시품절)",
       "w": 390,
-      "x": 470,
+      "x": 1410,
       "y": 1360
     },
     "Pickup.dc.html": {
@@ -205,6 +205,62 @@
       "title": "P1 · 다른 구매 방법 ⑥ 수량 초과",
       "x": 2350,
       "y": 5584
+    },
+    "AsisHome.dc.html": {
+      "h": 844,
+      "w": 390,
+      "x": 0,
+      "y": 1360,
+      "title": "AS-IS 홈 (상품 탐색)"
+    },
+    "AsisDetailPrice.dc.html": {
+      "h": 844,
+      "w": 390,
+      "x": 470,
+      "y": 1360,
+      "title": "AS-IS 상품 상세 (구매 영역 접힘)"
+    },
+    "AsisCheckSlot2.dc.html": {
+      "h": 844,
+      "w": 390,
+      "x": 470,
+      "y": 2300,
+      "title": "AS-IS 주문/결제 ② 15:00 선택"
+    },
+    "AsisCheckSlot3.dc.html": {
+      "h": 844,
+      "w": 390,
+      "x": 940,
+      "y": 2300,
+      "title": "AS-IS 주문/결제 ③ 22:00 선택"
+    },
+    "AsisCheckPoints.dc.html": {
+      "h": 844,
+      "w": 390,
+      "x": 1410,
+      "y": 2300,
+      "title": "AS-IS 주문/결제 ④ 요청사항 · 포인트"
+    },
+    "AsisCheckBenefit.dc.html": {
+      "h": 844,
+      "w": 390,
+      "x": 1880,
+      "y": 2300,
+      "title": "AS-IS 주문/결제 ⑤ 최종 결제금액 · 즉시할인"
+    },
+    "AsisCheckPay.dc.html": {
+      "h": 844,
+      "w": 390,
+      "x": 2350,
+      "y": 2300,
+      "title": "AS-IS 주문/결제 ⑥ 결제수단"
+    },
+    "AsisCheckAgree.dc.html": {
+      "h": 844,
+      "w": 390,
+      "x": 2820,
+      "y": 2300,
+      "title": "AS-IS 주문/결제 ⑦ 동의 · 결제하기"
     }
   },
   "createdOnFiles": {
@@ -218,6 +274,8 @@
   "noteOrder": [
     "t0",
     "t1",
+    "t1b",
+    "s8",
     "t2",
     "t2a",
     "t2b",
@@ -250,7 +308,7 @@
     "s3": {
       "text": "AS-IS 관찰\n· 시간대별 배송비가 옆에 표시되지 않고, 선택해야 하단 배송비가 바뀜\n· 무료배송 기준과 남은 금액 안내 없음\n· 배송·할인·결제 정보가 한 페이지에 길게 이어짐\n· 품절 옵션의 행동은 재입고 알림뿐",
       "w": 380,
-      "x": 1410,
+      "x": 1880,
       "y": 1360
     },
     "t0": {
@@ -344,13 +402,36 @@
       "y": 10736,
       "w": 420,
       "text": "검증 가설과 한계\n· 품절 이후 다른 구매 방법을 발견하고 선택할 수 있다면 구매 이탈을 줄일 수 있다는 가설이에요\n· 매출 손실액·전환율 개선은 확인된 수치가 없어서 성과로 쓰지 않아요\n· 수량별 재고(예: 2개까지), 재조회 실패 횟수, 재입고 알림 성공은 시연용 가정이에요"
+    },
+    "t1b": {
+      "kind": "title1",
+      "maxW": 3200,
+      "text": "AS-IS · 주문/결제 (실제 앱 캡처)",
+      "w": 240,
+      "x": 0,
+      "y": 2040
+    },
+    "s8": {
+      "fill": "gray",
+      "x": 2350,
+      "y": 1360,
+      "w": 420,
+      "text": "AS-IS 화면은 실제 올리브영 앱에서 직접 캡처했어요. 이름·전화번호·상세 주소·계좌번호는 가리거나 시안용 값으로 바꿨어요. 옵션 선택 시트(AS-IS 옵션 선택)는 캡처가 없어서 다시 그린 화면이에요."
     }
   },
   "order": [
     "Prototype.dc.html",
+    "AsisHome.dc.html",
+    "AsisDetailPrice.dc.html",
     "DetailAsis.dc.html",
     "Main.dc.html",
     "CheckoutAsis.dc.html",
+    "AsisCheckSlot2.dc.html",
+    "AsisCheckSlot3.dc.html",
+    "AsisCheckPoints.dc.html",
+    "AsisCheckBenefit.dc.html",
+    "AsisCheckPay.dc.html",
+    "AsisCheckAgree.dc.html",
     "OptionsA.dc.html",
     "OptionsB.dc.html",
     "OptionsC.dc.html",
