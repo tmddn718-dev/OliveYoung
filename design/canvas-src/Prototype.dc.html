@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>인터랙티브 프로토타입</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&amp;display=swap">
+<style>body{margin:0}@keyframes oyld{0%{transform:translateX(-100%)}100%{transform:translateX(260%)}}</style>
+</helmet>
+<div style="position:relative;width:390px;height:844px;overflow:hidden;background:#FFFFFF;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;color:#131518;font-size:15px;line-height:22px;letter-spacing:-0.3px">
+
+  <sc-if value="{{isHome}}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;left:0;right:0;top:47px;bottom:0;overflow-y:auto;padding:20px 16px 32px;box-sizing:border-box">
+      <div style="font-size:13px;line-height:18px;color:#6E737B">올리브영 오늘드림 UX 개선 · 비공식 포트폴리오 시안</div>
+      <div style="font-size:24px;line-height:32px;font-weight:700;margin-top:6px">품절에서 끝나지 않는<br>구매 경험</div>
+      <div style="font-size:14px;line-height:20px;color:#6E737B;margin-top:8px">시나리오를 골라 직접 조작해 보세요. 재고 조회와 결제는 모두 시뮬레이션이에요.</div>
+      <button onClick="{{startA}}" style="display:block;width:100%;text-align:left;margin-top:20px;padding:16px;border:1px solid #DCDFE3;border-radius:8px;background:#FFFFFF;font-family:inherit;color:#131518;letter-spacing:-0.3px"><span style="display:block;font-size:13px;line-height:18px;color:#C72764;font-weight:600">Flow A · P0</span><span style="display:block;font-size:17px;line-height:24px;font-weight:700;margin-top:4px">오늘드림 품절 → 매장 픽업 구매</span><span style="display:block;font-size:14px;line-height:20px;color:#6E737B;margin-top:4px">과업: 오늘드림으로 사려던 상품이 품절이에요. 다른 방법으로 구매해 보세요. 상세 하단 패널 펼침·접힘도 함께 확인할 수 있어요.</span></button>
+      <button onClick="{{startB}}" style="display:block;width:100%;text-align:left;margin-top:10px;padding:16px;border:1px solid #DCDFE3;border-radius:8px;background:#FFFFFF;font-family:inherit;color:#131518;letter-spacing:-0.3px"><span style="display:block;font-size:13px;line-height:18px;color:#C72764;font-weight:600">Flow B · P0</span><span style="display:block;font-size:17px;line-height:24px;font-weight:700;margin-top:4px">모든 수령 방식 구매 불가 → 재입고 알림</span><span style="display:block;font-size:14px;line-height:20px;color:#6E737B;margin-top:4px">일반배송과 매장 픽업 모두 주문할 수 없을 때 재입고 알림으로 이어져요.</span></button>
+      <button onClick="{{startC}}" style="display:block;width:100%;text-align:left;margin-top:10px;padding:16px;border:1px solid #DCDFE3;border-radius:8px;background:#FFFFFF;font-family:inherit;color:#131518;letter-spacing:-0.3px"><span style="display:block;font-size:13px;line-height:18px;color:#C72764;font-weight:600">Flow C · P1 / P2</span><span style="display:block;font-size:17px;line-height:24px;font-weight:700;margin-top:4px">무료배송 기준 미달 → 배송비 비교</span><span style="display:block;font-size:14px;line-height:20px;color:#6E737B;margin-top:4px">과업: 10,000원 주문에서 가장 저렴한 배송 시간대를 고르고, 쓸 수 있는 혜택과 최종 결제금액을 확인해 보세요.</span></button>
+      <button onClick="{{startD}}" style="display:block;width:100%;text-align:left;margin-top:10px;padding:16px;border:1px solid #DCDFE3;border-radius:8px;background:#FFFFFF;font-family:inherit;color:#131518;letter-spacing:-0.3px"><span style="display:block;font-size:13px;line-height:18px;color:#C72764;font-weight:600">Flow D · 예외 상태</span><span style="display:block;font-size:17px;line-height:24px;font-weight:700;margin-top:4px">주문 직전 픽업 재고가 바뀌었을 때</span><span style="display:block;font-size:14px;line-height:20px;color:#6E737B;margin-top:4px">과업: 픽업으로 구매를 진행하다가 결제 직전에 주문 가능 상태가 바뀌어요. 안내를 읽고 다른 방법으로 이어가 보세요.</span></button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{showDetail}}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:0;right:0;top:47px;height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 6px 0 4px"><button aria-label="시나리오 선택으로" onClick="{{restart}}" style="width:44px;height:44px;border:0;background:none;display:flex;align-items:center;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#131518" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12H4.5M10.5 5.5L4 12l6.5 6.5"></path></svg></button><div style="display:flex;gap:14px;padding-right:8px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#131518" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M15.5 15.5l5 5"></path></svg><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#131518" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5L12 4l8 6.5V20h-5.5v-5h-5v5H4z"></path></svg><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#131518" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 8.5h15l-.8 11.5H5.3z"></path><path d="M8.5 8.5V7a3.5 3.5 0 017 0v1.5"></path></svg></div></div>
+    <div style="position:absolute;left:0;top:95px;width:390px;height:390px;overflow:hidden;background:linear-gradient(175deg,#BDEAF1 0%,#E2F3F1 50%,#EEF1EE 100%)"><div style="position:absolute;left:40px;top:120px;width:100px;height:180px;background:#fff;overflow:hidden"><div style="position:absolute;left:0;right:0;bottom:0;height:96px;background:#69BAB5"></div></div><div style="position:absolute;left:146px;top:84px;width:108px;height:210px;background:#fff;overflow:hidden"><div style="position:absolute;left:0;right:0;bottom:0;height:112px;background:#E07F98"></div></div><div style="position:absolute;left:262px;top:136px;width:92px;height:166px;background:#fff;overflow:hidden"><div style="position:absolute;left:0;right:0;bottom:0;height:88px;background:#F0CD6E"></div></div></div>
+    <div style="position:absolute;left:16px;right:16px;top:497px">
+      <div style="font-size:16px;line-height:30px">메디힐 ›</div>
+      <div style="font-size:16px;line-height:23px;margin-top:8px">[11월 올영픽/15년 연속 1위] 메디힐 에센셜 마스크팩 10/10+1매 기획 7종 골라담기</div>
+      <div style="display:flex;align-items:baseline;gap:6px;margin-top:12px;line-height:30px"><span style="font-size:22px;font-weight:700;color:#F2495F">50%</span><span style="font-size:22px;font-weight:700">10,000<span style="font-size:16px;font-weight:400">원~</span></span></div>
+    </div>
+    <div style="position:absolute;left:0;right:0;bottom:0;background:#FFFFFF;border-radius:20px 20px 0 0;box-shadow:0 -2px 14px rgba(0,0,0,.08);padding:8px 0 35px">
+      <sc-if value="{{panelClosed}}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 4px 0 16px;min-height:48px"><span style="font-size:16px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><b style="font-weight:600">{{recvTitle}}</b><span style="color:#6E737B;font-size:14px;margin-left:8px">{{recvSub}}</span></span><button onClick="{{togglePanel}}" aria-expanded="false" aria-label="수령 정보 펼치기" style="flex:none;width:44px;height:44px;border:0;background:none;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#131518" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 15l7-7 7 7"></path></svg></button></div>
+      </sc-if>
+      <sc-if value="{{panelOpen}}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:0 4px 0 16px;min-height:44px"><span style="font-size:16px;font-weight:600">수령 방법</span><button onClick="{{togglePanel}}" aria-expanded="true" aria-label="수령 정보 접기" style="width:44px;height:44px;border:0;background:none;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#131518" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9l7 7 7-7"></path></svg></button></div>
+        <div style="display:flex;gap:8px;padding:4px 16px 0"><button onClick="{{setToday}}" aria-pressed="{{recvToday}}" style="{{segToday}}">오늘드림</button><button onClick="{{setPickup}}" aria-pressed="{{recvPickup}}" style="{{segPickup}}">매장 픽업</button></div>
+        <sc-if value="{{recvToday}}" hint-placeholder-val="{{ true }}"><div style="padding:14px 16px 0"><div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px;font-weight:700">우리집</span><span style="background:#F0F1F3;color:#6E737B;font-size:13px;line-height:18px;padding:2px 6px;border-radius:2px">기본배송지</span></div><span style="font-size:15px;color:#6E737B">변경</span></div><div style="margin-top:4px;font-size:15px;color:#3A3D42">서울 ○○구 ○○로 00 (시안 예시)</div><div style="margin-top:2px;font-size:13px;line-height:18px;color:#6E737B">옵션을 고르면 이 배송지 기준으로 오늘드림 재고를 확인해요</div></div></sc-if>
+        <sc-if value="{{recvPickup}}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{hasStore}}" hint-placeholder-val="{{ false }}"><div style="padding:14px 16px 0"><div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px;font-weight:700">{{storeName}}</span><span style="background:#F0F1F3;color:#6E737B;font-size:13px;line-height:18px;padding:2px 6px;border-radius:2px">픽업 매장</span></div><button onClick="{{storeFromDetail}}" style="height:44px;padding:0 0 0 8px;border:0;background:none;font-size:15px;color:#6E737B;font-family:inherit;margin-right:-4px">매장 변경</button></div><div style="margin-top:2px;font-size:13px;line-height:18px;color:#6E737B">옵션을 고르면 이 매장의 픽업 주문 가능 여부를 확인해요</div></div></sc-if>
+          <sc-if value="{{noStore}}" hint-placeholder-val="{{ true }}"><div style="padding:14px 16px 0;display:flex;justify-content:space-between;align-items:center;gap:8px"><div><div style="font-size:16px;font-weight:600">픽업할 매장을 골라 주세요</div><div style="font-size:13px;line-height:18px;color:#6E737B">매장마다 픽업 주문 가능 여부가 달라요</div></div><button onClick="{{storeFromDetail}}" style="flex:none;height:44px;padding:0 12px;border:1px solid #131518;border-radius:8px;background:#FFFFFF;color:#131518;font-size:14px;font-weight:600;font-family:inherit">픽업 매장 선택</button></div></sc-if>
+        </sc-if>
+      </sc-if>
+      <div style="display:flex;gap:8px;padding:10px 16px 0"><button style="flex:none;width:48px;height:49px;padding:0;border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-size:13px;line-height:16px;color:#131518;font-family:inherit"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#131518" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="9" width="16" height="11.5" rx="1"></rect><path d="M3 9h18M12 9v11.5M12 9C10.5 5 7 4.5 7 7c0 1.5 2.5 2 5 2zM12 9c1.5-4 5-4.5 5-2 0 1.5-2.5 2-5 2z"></path></svg>선물</button><button onClick="{{openOptions}}" style="flex:1;height:49px;border:1.5px solid #131518;border-radius:6px;background:#FFFFFF;color:#131518;font-size:18px;font-weight:700;font-family:inherit">장바구니</button><button onClick="{{openOptions}}" style="flex:1;height:49px;border:1.5px solid #131518;border-radius:6px;background:#131518;color:#FFFFFF;font-size:18px;font-weight:700;font-family:inherit">바로구매</button></div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isOptions}}" hint-placeholder-val="{{ false }}">
+    <button aria-label="옵션 닫기" onClick="{{closeSheet}}" style="position:absolute;left:0;right:0;top:47px;bottom:0;border:0;padding:0;background:rgba(0,0,0,.55)"></button>
+    <div style="position:absolute;left:0;right:0;top:300px;bottom:0;background:#FFFFFF;border-radius:20px 20px 0 0;overflow:hidden">
+      <div style="display:flex;justify-content:center;padding-top:12px;height:16px"><svg width="34" height="10" viewBox="0 0 34 10" fill="none" stroke="#D5D8DC" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M3 2.5l14 5 14-5"></path></svg></div>
+      <div style="margin:2px 16px 0;height:540px;border:1.5px solid #131518;border-bottom:0;border-radius:8px 8px 0 0;overflow:hidden">
+        <div style="height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 16px 0 14px;font-size:16px">옵션을 선택해 주세요<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#131518" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 15l7-7 7 7"></path></svg></div>
+        <div style="margin:0 14px 8px;padding:8px 12px;background:#F5F6F8;border-radius:6px;font-size:13px;line-height:18px;color:#5E636B">수령 방법 <b style="color:#131518;font-weight:600">오늘드림</b> · 우리집 기준 재고예요</div>
+        <div style="display:flex;align-items:center;gap:8px;height:76px;margin:0 14px;border-top:1px solid #EEEFF1"><div style="flex:none;width:54px;display:flex;justify-content:center"><div style="width:26px;height:46px;border:1px solid #E6E8EA;background:linear-gradient(180deg,#fff 0 38%,#69BAB5 38%)"></div></div><div style="flex:1;min-width:0;padding-left:7px"><div style="font-size:15px;line-height:21px">마데카소사이드 흔적리페어 10+1매</div><div style="display:flex;align-items:center;gap:4px;margin-top:3px"><span style="font-size:16px;font-weight:700;color:#F2495F">50%</span><span style="font-size:16px;font-weight:700">10,000원</span><span style="background:#F4F4F6;color:#E9417F;font-size:13px;line-height:18px;padding:1px 5px;border-radius:2px">오늘드림</span></div></div></div>
+        <div style="margin:0 14px;padding:12px 0;border-top:1px solid #EEEFF1"><div style="display:flex;align-items:center;gap:8px"><div style="flex:none;width:54px;display:flex;justify-content:center;opacity:.7"><div style="width:26px;height:46px;border:1px solid #E6E8EA;background:linear-gradient(180deg,#fff 0 38%,#E99AAE 38%)"></div></div><div style="flex:1;min-width:0;padding-left:7px"><div style="font-size:15px;line-height:21px">로제 PDRN 모공결광 10매</div><div style="display:flex;align-items:center;gap:4px;margin-top:3px"><span style="font-size:16px;font-weight:700;color:#6E737B">50% 10,000원</span><span style="background:#EEF0F2;color:#5E636B;font-size:13px;line-height:18px;padding:1px 5px;border-radius:2px;font-weight:600">오늘드림 품절</span></div></div></div><div style="display:flex;align-items:center;gap:8px;margin-top:8px;padding-left:69px"><button onClick="{{openAlt}}" style="height:44px;padding:0 12px;border:1px solid #131518;border-radius:8px;background:#131518;color:#FFFFFF;font-size:14px;font-weight:600;font-family:inherit">다른 구매 방법 확인</button><button onClick="{{restockTap}}" aria-disabled="{{restocked}}" style="{{restockLinkStyle}}">{{restockLinkText}}</button></div></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:12px 0;margin:0 14px;border-top:1px solid #EEEFF1"><div style="flex:none;width:54px;display:flex;justify-content:center;opacity:.45"><div style="width:26px;height:46px;border:1px solid #E6E8EA;background:linear-gradient(180deg,#fff 0 38%,#F3B7C4 38%)"></div></div><div style="flex:1;min-width:0;padding-left:7px;color:#6E737B"><div style="font-size:15px;line-height:21px">콜라겐 코어탄력 10매</div><div style="margin-top:3px"><span style="background:#EEF0F2;color:#5E636B;font-size:13px;line-height:18px;padding:1px 5px;border-radius:2px;font-weight:600">전체 품절</span></div><div style="font-size:12px;line-height:17px;margin-top:3px">확인한 수령 방법 모두 구매할 수 없어요</div></div><button onClick="{{openRestock}}" style="flex:none;height:44px;padding:0 12px;border:1px solid #131518;border-radius:8px;background:#FFFFFF;color:#131518;font-size:14px;font-weight:600;font-family:inherit">재입고 알림</button></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isAlt}}" hint-placeholder-val="{{ false }}">
+    <button aria-label="닫기" onClick="{{closeSheet}}" style="position:absolute;left:0;right:0;top:47px;bottom:0;border:0;padding:0;background:rgba(0,0,0,.6)"></button>
+    <div style="position:absolute;left:0;right:0;bottom:0;background:#FFFFFF;border-radius:20px 20px 0 0;padding:0 16px 35px">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:16px"><span style="font-size:21px;line-height:30px;font-weight:700">다른 구매 방법 확인</span><button aria-label="닫기" onClick="{{closeSheet}}" style="width:44px;height:44px;margin-right:-10px;border:0;background:none;display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#131518" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5.5 5.5l13 13M18.5 5.5l-13 13"></path></svg></button></div>
+      <div style="display:flex;gap:12px;align-items:center;margin-top:8px;padding:12px;background:#F5F6F8;border-radius:8px"><div style="flex:none;width:44px;height:56px;border:1px solid #E6E8EA;background:linear-gradient(180deg,#fff 0 38%,#E99AAE 38%)"></div><div style="flex:1;min-width:0"><div style="font-size:13px;line-height:18px;color:#6E737B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">메디힐 에센셜 마스크팩 10/10+1매 기획 7종</div><div style="font-size:15px;font-weight:600">로제 PDRN 모공결광 10매</div><div style="font-size:13px;line-height:18px;color:#6E737B">수량 1개 · 10,000원</div></div></div>
+      <sc-if value="{{allNone}}" hint-placeholder-val="{{ false }}"><div style="margin-top:12px;padding:12px 14px;background:#F5F6F8;border-radius:8px"><div style="font-size:15px;font-weight:700">현재 확인한 수령 방법으로는 구매할 수 없어요</div><div style="font-size:13px;line-height:18px;color:#6E737B;margin-top:2px">다른 매장을 찾아보거나 재입고 알림을 신청해 주세요.</div></div></sc-if>
+      <div style="margin-top:4px">
+        <div style="display:flex;gap:12px;align-items:flex-start;margin-top:8px;padding:14px;border:1px solid #E6E8EA;border-radius:8px;box-sizing:border-box"><div style="flex:none;padding-top:1px"><span style="{{radioDis}}"></span></div><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px"><span style="font-size:16px;font-weight:700">오늘드림</span><span style="{{GRAYCHIP}}">품절</span></div><div style="font-size:13px;line-height:18px;color:#6E737B;margin-top:2px">우리집 배송지 기준으로 현재 주문할 수 없어요.</div><div style="margin-top:2px"><button onClick="{{openAlt}}" style="height:36px;padding:0;border:0;background:none;color:#5E636B;font-size:14px;font-family:inherit;text-decoration:underline;text-underline-offset:3px">다시 확인</button></div></div></div>
+        <div onClick="{{selStd}}" role="radio" aria-checked="{{stdSelected}}" style="{{stdRowStyle}}"><div style="flex:none;padding-top:1px"><span style="{{stdRadio}}"></span></div><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px"><span style="font-size:16px;font-weight:700">일반배송</span><span style="{{stdChipStyle}}">{{stdChip}}</span></div><div style="font-size:13px;line-height:18px;color:#6E737B;margin-top:2px">{{stdDesc}}</div><sc-if value="{{stdLoading}}" hint-placeholder-val="{{ false }}"><div style="margin-top:10px;height:3px;border-radius:2px;background:#E6E8EA;overflow:hidden"><div style="width:40%;height:3px;background:#131518;animation:oyld 1.2s ease-in-out infinite"></div></div></sc-if><sc-if value="{{stdFail}}" hint-placeholder-val="{{ false }}"><div style="margin-top:10px"><button onClick="{{openAlt}}" style="height:44px;padding:0 14px;border:1px solid #131518;border-radius:8px;background:#FFFFFF;color:#131518;font-size:14px;font-weight:600;font-family:inherit">다시 확인</button></div></sc-if><sc-if value="{{stdOk}}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;line-height:17px;color:#2457A7;margin-top:6px">오늘드림과 배송 조건이 달라요</div></sc-if></div></div>
+        <div onClick="{{selPick}}" role="radio" aria-checked="{{pickSelected}}" style="{{pickRowStyle}}"><div style="flex:none;padding-top:1px"><span style="{{pickRadio}}"></span></div><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px"><span style="font-size:16px;font-weight:700">매장 픽업</span><span style="{{pickChipStyle}}">{{pickChip}}</span></div><div style="font-size:13px;line-height:18px;color:#6E737B;margin-top:2px">{{pickDesc}}</div><sc-if value="{{pickNeed}}" hint-placeholder-val="{{ true }}"><div style="margin-top:10px"><button onClick="{{storeFromAlt}}" style="height:44px;padding:0 14px;border:1px solid #131518;border-radius:8px;background:#FFFFFF;color:#131518;font-size:14px;font-weight:600;font-family:inherit">픽업 매장 선택</button></div></sc-if><sc-if value="{{pickNone}}" hint-placeholder-val="{{ false }}"><div style="margin-top:10px"><button onClick="{{storeFromAlt}}" style="height:44px;padding:0 14px;border:1px solid #131518;border-radius:8px;background:#FFFFFF;color:#131518;font-size:14px;font-weight:600;font-family:inherit">다른 매장 찾기</button></div></sc-if></div><sc-if value="{{pickOk}}" hint-placeholder-val="{{ false }}"><button onClick="{{storeFromAlt}}" style="flex:none;height:36px;padding:0 10px;border:1px solid #DCDFE3;border-radius:6px;background:#FFFFFF;color:#3A3D42;font-size:13px;font-family:inherit;margin:-4px -4px 0 0">매장 변경</button></sc-if></div>
+      </div>
+      <sc-if value="{{notAllNone}}" hint-placeholder-val="{{ true }}"><div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px"><span style="font-size:14px;color:#6E737B">기다릴 수 있다면</span><button onClick="{{openRestock}}" style="height:44px;padding:0 0 0 8px;border:0;background:none;color:#131518;font-size:14px;font-weight:600;font-family:inherit">재입고 알림 받기 ›</button></div>
+        <div style="margin-top:4px"><button onClick="{{ctaTap}}" aria-disabled="{{ctaDisabled}}" style="{{ctaStyle}}">{{ctaText}}</button></div>
+        <sc-if value="{{ctaNote}}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;line-height:17px;color:#6E737B;margin-top:8px;text-align:center">수령 가능 시점과 비용은 확인된 정보만 주문 단계에서 안내해요</div></sc-if></sc-if>
+      <sc-if value="{{allNone}}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:8px;margin-top:16px"><button onClick="{{storeFromAlt}}" style="flex:1;height:49px;border:1px solid #131518;border-radius:8px;background:#FFFFFF;color:#131518;font-size:16px;font-weight:600;font-family:inherit">다른 매장 찾기</button><button onClick="{{openRestock}}" style="flex:1.2;height:49px;border:1.5px solid #131518;border-radius:6px;background:#131518;color:#FFFFFF;font-size:17px;font-weight:700;font-family:inherit">재입고 알림 신청</button></div></sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isRestock}}" hint-placeholder-val="{{ false }}">
+    <button aria-label="닫기" onClick="{{closeSheet}}" style="position:absolute;left:0;right:0;top:47px;bottom:0;border:0;padding:0;background:rgba(0,0,0,.6)"></button>
+    <div style="position:absolute;left:0;right:0;bottom:0;background:#FFFFFF;border-radius:20px 20px 0 0;padding:0 16px 40px">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:16px"><span style="font-size:21px;line-height:30px;font-weight:700">오늘드림 재입고 알림 신청</span><button aria-label="닫기" onClick="{{closeSheet}}" style="width:44px;height:44px;margin-right:-10px;border:0;background:none;display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#131518" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5.5 5.5l13 13M18.5 5.5l-13 13"></path></svg></button></div>
+      <div style="font-size:16px;line-height:24px;margin-top:12px">상품이 입고되면 앱 푸시 알림을 받으시겠어요?<br>알림은 30일 후 자동으로 해제돼요.</div>
+      <div style="display:flex;gap:15px;margin-top:16px"><div style="flex:none;width:76px;height:76px;border-radius:4px;background:linear-gradient(175deg,#BDEAF1,#E2F3F1 50%,#F2D9E1)"></div><div style="flex:1;min-width:0"><div style="font-size:15px;line-height:20px">[11월 올영픽/15년 연속 1위] 메디힐 에센셜 마스크팩 10/10+1매 기획 7종 골라담기</div><div style="margin-top:8px;height:44px;border:1px solid #DCDFE3;border-radius:6px;padding:0 14px;display:flex;align-items:center;font-size:15px">{{restockOption}}</div></div></div>
+      <div style="margin-top:18px;background:#F5F6F8;border-radius:8px;padding:16px"><ul style="margin:0;padding-left:18px;font-size:14px;line-height:21px;color:#6E737B"><li>재입고 알림은 최대 30일 동안 유지되며, 기간 내에 상품이 입고되지 않으면 다시 신청해주셔야 합니다.</li><li style="margin-top:8px">상품이 입고되면 알림은 한 번만 발송됩니다. 알림을 확인하지 못하셨다면 상품 페이지에서 다시 신청해 주세요.</li><li style="margin-top:8px">알림 신청은 구매 예약이나 재고 확보를 의미하지 않아요.</li></ul></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"><span style="font-size:14px;color:#6E737B">기다리지 않고 지금 받고 싶다면</span><button onClick="{{openAlt}}" style="height:44px;padding:0 0 0 8px;border:0;background:none;color:#131518;font-size:14px;font-weight:600;font-family:inherit">다른 구매 방법 확인 ›</button></div>
+      <div style="display:flex;gap:8px;margin-top:8px"><button onClick="{{closeSheet}}" style="flex:1;height:49px;border:1.5px solid #131518;border-radius:6px;background:#FFFFFF;color:#131518;font-size:18px;font-weight:700;font-family:inherit">취소</button><button onClick="{{submitRestock}}" style="flex:1;height:49px;border:1.5px solid #131518;border-radius:6px;background:#131518;color:#FFFFFF;font-size:18px;font-weight:700;font-family:inherit">알림 받기</button></div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isRestockDone}}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:0;right:0;top:47px;bottom:0;background:rgba(0,0,0,.55)"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;background:#FFFFFF;border-radius:20px 20px 0 0;padding:24px 16px 40px">
+      <div style="width:44px;height:44px;border-radius:22px;background:#EBF6EF;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></div>
+      <div style="font-size:21px;line-height:30px;font-weight:700;margin-top:12px">재입고 알림을 신청했어요</div>
+      <div style="font-size:16px;line-height:24px;margin-top:6px">상품이 입고되면 앱 푸시로 한 번 알려드려요.<br>알림은 30일 후 자동으로 해제돼요.<br>알림 신청은 구매 예약이나 재고 확보가 아니에요.</div>
+      <div style="margin-top:14px;padding:12px 14px;background:#F5F6F8;border-radius:8px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:15px">{{restockOption}}</span><span style="background:#EBF6EF;color:#1D7A4C;font-size:13px;line-height:18px;padding:1px 5px;border-radius:2px;font-weight:600">알림 설정됨</span></div>
+      <div style="display:flex;gap:8px;margin-top:24px"><button onClick="{{openAlt}}" style="flex:1;height:49px;border:1.5px solid #131518;border-radius:6px;background:#FFFFFF;color:#131518;font-size:17px;font-weight:700;font-family:inherit">다른 구매 방법 보기</button><button onClick="{{closeSheet}}" style="flex:1;height:49px;border:1.5px solid #131518;border-radius:6px;background:#131518;color:#FFFFFF;font-size:18px;font-weight:700;font-family:inherit">확인</button></div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isStore}}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:0;right:0;top:47px;height:48px;display:grid;grid-template-columns:56px 1fr 56px;align-items:center;text-align:center;border-bottom:1px solid #EEEFF1;background:#FFFFFF"><button aria-label="뒤로" onClick="{{storeBack}}" style="width:44px;height:44px;margin-left:6px;border:0;background:none;display:flex;align-items:center;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#131518" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12H4.5M10.5 5.5L4 12l6.5 6.5"></path></svg></button><span style="font-size:18px;font-weight:600">픽업 매장 선택</span><span></span></div>
+    <div style="position:absolute;left:0;right:0;top:96px;bottom:0;overflow-y:auto;padding:16px 16px 120px;box-sizing:border-box">
+      <div style="display:flex;gap:12px;align-items:center;padding:10px 12px;background:#F5F6F8;border-radius:8px"><div style="flex:none;width:36px;height:48px;border:1px solid #E6E8EA;background:linear-gradient(180deg,#fff 0 38%,{{productColor}} 38%)"></div><div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:600">{{productName}}</div><div style="font-size:13px;line-height:18px;color:#6E737B">수량 1개 · 선택한 옵션과 수량을 유지해요</div></div></div>
+      <div style="margin-top:12px;height:44px;border:1px solid #DCDFE3;border-radius:6px;padding:0 14px;display:flex;align-items:center;gap:8px;font-size:16px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6E737B" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M15.5 15.5l5 5"></path></svg>서울 구로구</div>
+      <div style="font-size:13px;line-height:18px;color:#6E737B;margin-top:8px">서울 구로구 기준 · 가까운 순 · 매장 재고가 있어도 픽업 주문 가능 여부는 따로 확인해요</div>
+      <div style="margin-top:6px">
+        <sc-for list="{{stores}}" as="s" hint-placeholder-count="4">
+          <div style="display:flex;align-items:center;gap:8px;padding:12px 0;border-top:1px solid #EEEFF1"><div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600;line-height:22px">{{s.name}}</div><div style="font-size:13px;line-height:18px;color:#6E737B">{{s.addr}}</div><div style="margin-top:4px"><span style="{{s.chipStyle}}">{{s.chip}}</span></div></div><button onClick="{{s.tap}}" aria-disabled="{{s.disabled}}" style="{{s.btnStyle}}">{{s.btnText}}</button></div>
+        </sc-for>
+      </div>
+    </div>
+    <sc-if value="{{storeAllFailed}}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;left:0;right:0;bottom:0;padding:12px 16px 35px;background:#FFFFFF;border-top:1px solid #EEEFF1"><div style="font-size:14px;line-height:20px;color:#3A3D42;margin-bottom:10px">확인한 매장 모두 지금은 픽업 주문을 할 수 없어요</div><button onClick="{{storeBack}}" style="width:100%;height:49px;border:1.5px solid #131518;border-radius:6px;background:#131518;color:#FFFFFF;font-size:18px;font-weight:700;font-family:inherit">구매 방법 다시 보기</button></div>
+    </sc-if>
+  </sc-if>
+
+  <sc-if value="{{isCart}}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:0;right:0;top:47px;height:48px;display:grid;grid-template-columns:56px 1fr 56px;align-items:center;text-align:center;border-bottom:1px solid #EEEFF1"><button aria-label="시나리오 선택으로" onClick="{{restart}}" style="width:44px;height:44px;margin-left:6px;border:0;background:none;display:flex;align-items:center;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#131518" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12H4.5M10.5 5.5L4 12l6.5 6.5"></path></svg></button><span style="font-size:18px;font-weight:600">장바구니</span><span></span></div>
+    <div style="position:absolute;left:0;right:0;top:96px;bottom:150px;overflow-y:auto;box-sizing:border-box">
+      <div style="padding:16px">
+        <div style="font-size:18px;font-weight:700">오늘드림 <span style="font-size:14px;font-weight:400;color:#6E737B;margin-left:4px">우리집</span></div>
+        <div style="margin-top:12px;padding:14px;border-radius:8px;background:#F5F6F8">
+          <sc-if value="{{notFree}}" hint-placeholder-val="{{ true }}"><div style="font-size:15px;line-height:22px"><b style="color:#C72764">{{remainText}}</b> 더 담으면 오늘드림 무료배송 혜택을 받을 수 있어요.</div></sc-if>
+          <sc-if value="{{freeShip}}" hint-placeholder-val="{{ false }}"><div style="font-size:15px;line-height:22px;font-weight:600">오늘드림 무료배송 조건을 채웠어요</div></sc-if>
+          <div style="margin-top:10px;height:6px;border-radius:3px;background:#DCDFE3;overflow:hidden"><div style="height:6px;background:#131518;width:{{progressPct}}"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:12px;line-height:17px;color:#6E737B"><span>현재 {{subtotalText}}</span><span>무료배송 기준 30,000원</span></div>
+          <div style="font-size:12px;line-height:17px;color:#6E737B;margin-top:8px">필요한 상품이 없다면 배송비를 내고 바로 구매할 수 있어요</div><div style="display:flex;gap:8px;margin-top:12px"><button onClick="{{scrollRecs}}" style="flex:1;height:44px;border:1px solid #131518;border-radius:8px;background:#FFFFFF;color:#131518;font-size:14px;font-weight:600;font-family:inherit">필요한 상품 더 담기</button><button onClick="{{storeFromCart}}" style="flex:1;height:44px;border:1px solid #DCDFE3;border-radius:8px;background:#FFFFFF;color:#3A3D42;font-size:14px;font-family:inherit">픽업 가능 여부 확인</button></div>
+        </div>
+        <div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #EEEFF1"><div style="flex:none;width:64px;height:64px;border:1px solid #E6E8EA;background:linear-gradient(180deg,#fff 0 38%,#69BAB5 38%)"></div><div style="flex:1;min-width:0"><div style="font-size:14px;line-height:20px;color:#6E737B">메디힐 에센셜 마스크팩 기획 7종</div><div style="font-size:15px;line-height:21px">마데카소사이드 흔적리페어 10+1매</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"><span style="font-size:14px;color:#6E737B">수량 1개</span><b style="font-size:16px">10,000원</b></div></div></div>
+        <sc-for list="{{addedItems}}" as="a" hint-placeholder-count="0">
+          <div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #EEEFF1"><div style="flex:none;width:64px;height:64px;border:1px dashed #ADB1B8;background:#F5F6F8"></div><div style="flex:1;min-width:0"><div style="font-size:15px;line-height:21px">{{a.name}}</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"><span style="font-size:14px;color:#6E737B">수량 1개</span><b style="font-size:16px">{{a.priceText}}</b></div></div></div>
+        </sc-for>
+        <div style="margin-top:16px;font-size:16px;font-weight:700">함께 담기 좋은 오늘드림 상품</div>
+        <div style="font-size:13px;line-height:18px;color:#6E737B;margin-top:2px">최근 본 카테고리 · 오늘드림 주문 가능 여부를 확인한 상품만 보여드려요</div>
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <sc-for list="{{recs}}" as="r" hint-placeholder-count="2">
+            <div style="flex:1;min-width:0;border:1px solid #EEEFF1;border-radius:8px;padding:10px"><div style="height:72px;border-radius:4px;background:linear-gradient(180deg,#F5F6F8 0 38%,#E99AAE 38%)"></div><div style="font-size:14px;line-height:20px;margin-top:8px">{{r.name}}</div><div style="display:flex;align-items:center;gap:4px;margin-top:2px"><b style="font-size:15px">{{r.priceText}}</b><span style="background:#F4F4F6;color:#E9417F;font-size:12px;line-height:16px;padding:1px 4px;border-radius:2px">오늘드림</span></div><button onClick="{{r.toggle}}" aria-pressed="{{r.added}}" style="{{r.btnStyle}}">{{r.btnText}}</button></div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:12px 16px 35px;background:#FFFFFF;border-top:1px solid #EEEFF1">
+      <div style="display:flex;justify-content:space-between;font-size:14px;color:#3A3D42"><span>상품금액</span><span>{{subtotalText}}</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:14px;color:#3A3D42;margin-top:2px"><span>오늘드림 배송비</span><span>{{cartFeeText}}</span></div>
+      <button onClick="{{goCheckout}}" style="width:100%;height:49px;margin-top:10px;border:1.5px solid #131518;border-radius:6px;background:#131518;color:#FFFFFF;font-size:18px;font-weight:700;font-family:inherit">배송비 확인하고 구매하기</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isCheckout}}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:0;right:0;top:47px;height:48px;display:grid;grid-template-columns:56px 1fr 56px;align-items:center;text-align:center;border-bottom:1px solid #EEEFF1;background:#FFFFFF"><button aria-label="뒤로" onClick="{{checkoutBack}}" style="width:44px;height:44px;margin-left:6px;border:0;background:none;display:flex;align-items:center;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#131518" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12H4.5M10.5 5.5L4 12l6.5 6.5"></path></svg></button><span style="font-size:18px;font-weight:600">주문/결제</span><span></span></div>
+    <div style="position:absolute;left:0;right:0;top:96px;bottom:214px;overflow-y:auto;background:#F4F5F7">
+      <div style="padding:20px 16px;background:#FFFFFF">
+        <button onClick="{{toggleG1}}" aria-expanded="{{g1Open}}" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:0;border:0;background:none;font-family:inherit;color:#131518;text-align:left;letter-spacing:-0.3px"><span style="font-size:13px;line-height:18px;color:#6E737B;font-weight:600">1 · 배송·수령 정보</span><span style="flex:none;display:flex;align-items:center;gap:4px;font-size:14px;font-weight:600;min-height:32px">{{g1Label}}<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#131518" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{g1Chevron}}"></path></svg></span></button>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:10px"><span style="font-size:17px;font-weight:700">우리집</span><span style="background:#F0F1F3;color:#6E737B;font-size:13px;line-height:18px;padding:2px 6px;border-radius:2px">기본배송지</span></div>
+        <div style="font-size:14px;line-height:20px;color:#3A3D42;margin-top:2px">서울 ○○구 ○○로 00 (시안 예시)</div>
+        <div style="display:flex;justify-content:space-between;font-size:14px;margin-top:10px"><span>{{recvLine}}</span><b>{{feeLine}}</b></div>
+        <sc-if value="{{g1Open}}" hint-placeholder-val="{{ false }}"><div>
+          <div style="height:1px;background:#EEEFF1;margin:14px 0"></div>
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:16px;font-weight:700">배송 방법</span><sc-if value="{{showMethodToggle}}" hint-placeholder-val="{{ true }}"><div style="display:flex;padding:2px;border:1px solid #EEEFF1;border-radius:20px"><button onClick="{{methodToday}}" aria-pressed="{{isToday}}" style="{{pillToday}}">오늘드림</button><button onClick="{{methodPickup}}" aria-pressed="{{isPickup}}" style="{{pillPickup}}">픽업</button></div></sc-if><sc-if value="{{showMethodLabel}}" hint-placeholder-val="{{ false }}"><span style="font-size:15px;font-weight:600">{{methodLabel}}</span></sc-if></div>
+          <sc-if value="{{isToday}}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:1fr 1fr;margin-top:12px"><div style="padding:8px 0 10px;text-align:center;border-bottom:2px solid #131518"><div style="font-size:16px;font-weight:700">11/17 (화)</div><div style="font-size:12px;line-height:17px;color:#6E737B">오늘 · 선택 가능</div></div><div style="padding:8px 0 10px;text-align:center;border-bottom:1px solid #E6E8EA"><div style="font-size:16px;color:#A5A9AF">11/18 (수)</div><div style="font-size:12px;line-height:17px;color:#8C9097">지금 선택할 수 없어요</div></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;line-height:17px;color:#6E737B;margin-top:12px"><span>배송 시간대</span><span>배송비</span></div>
+            <sc-for list="{{slots}}" as="t" hint-placeholder-count="3">
+              <button onClick="{{t.pick}}" aria-pressed="{{t.selected}}" style="{{t.cardStyle}}"><span style="{{t.radioStyle}}"></span><span style="{{t.timeStyle}}">{{t.time}}</span><span style="{{t.feeStyle}}">{{t.feeText}}</span></button>
+            </sc-for>
+            <div style="margin-top:12px;padding:10px 12px;border-radius:8px;background:#F5F6F8;font-size:13px;line-height:18px;color:#3A3D42">{{freeLine}}</div>
+          </sc-if>
+          <sc-if value="{{isPickup}}" hint-placeholder-val="{{ false }}"><div style="margin-top:12px;padding:12px 14px;border:1px solid #EEEFF1;border-radius:8px"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:16px;font-weight:600">{{storeName}}</span><button onClick="{{storeFromCheckout}}" style="height:44px;padding:0 0 0 8px;border:0;background:none;font-size:14px;color:#6E737B;font-family:inherit;margin-right:-4px">매장 변경</button></div><div style="font-size:13px;line-height:18px;color:#6E737B">픽업 주문 가능 확인됨 · 수령 가능 시점과 비용은 실제 조회 값으로 안내해요</div></div></sc-if>
+          <sc-if value="{{isStandard}}" hint-placeholder-val="{{ false }}"><div style="margin-top:12px;padding:12px 14px;border:1px solid #EEEFF1;border-radius:8px;font-size:13px;line-height:18px;color:#6E737B">오늘드림이 아닌 일반배송 주문이에요. 배송비와 도착 예정은 실제 조회 값으로 안내해요.</div></sc-if>
+          <div style="display:flex;justify-content:space-between;align-items:center;min-height:44px;margin-top:8px;border-top:1px solid #EEEFF1;font-size:14px"><span>배송 요청사항</span><span style="color:#6E737B">공동현관 출입방법: 자유출입가능 ›</span></div>
+        </div></sc-if>
+      </div>
+      <div style="margin-top:8px;padding:20px 16px;background:#FFFFFF">
+        <button onClick="{{toggleBenefits}}" aria-expanded="{{benefitsOpen}}" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:0;border:0;background:none;font-family:inherit;color:#131518;text-align:left;letter-spacing:-0.3px"><span style="font-size:13px;line-height:18px;color:#6E737B;font-weight:600">2 · 할인·혜택</span><span style="flex:none;display:flex;align-items:center;gap:4px;font-size:14px;font-weight:600;min-height:32px">{{discountLabel}}<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#131518" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{benefitChevron}}"></path></svg></span></button>
+        <div style="font-size:14px;line-height:20px;color:#3A3D42;margin-top:8px">사용 가능 쿠폰 2장 · CJ ONE 포인트 690P</div>
+        <sc-if value="{{benefitsOpen}}" hint-placeholder-val="{{ false }}"><div style="margin-top:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;min-height:44px;border-top:1px solid #EEEFF1;font-size:14px"><span>쿠폰할인 <span style="border:1px solid #DCDFE3;border-radius:4px;padding:1px 6px;font-size:12px;color:#3A3D42;margin-left:4px">보유쿠폰 (2)</span></span><span style="color:#6E737B">적용 가능 쿠폰 확인 ›</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;min-height:52px;border-top:1px solid #EEEFF1;font-size:14px"><span>CJ ONE 포인트 <b style="color:#C72764;font-weight:600">690P</b></span><button onClick="{{togglePoint}}" style="{{pointBtnStyle}}">{{pointBtnText}}</button></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;min-height:44px;border-top:1px solid #EEEFF1;font-size:14px"><span>기프트카드·상품권·예치금</span><span style="color:#6E737B">조회하기 ›</span></div>
+          <div style="margin-top:12px;padding:12px 14px;border:1px dashed #ADB1B8;border-radius:8px"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:14px;font-weight:600">조건부 즉시할인</span><span style="{{instantChipStyle}}">{{instantChip}}</span></div><div style="font-size:13px;line-height:18px;color:#6E737B;margin-top:4px">{{instantText}}</div></div>
+        </div></sc-if>
+      </div>
+      <div style="margin-top:8px;padding:20px 16px 24px;background:#FFFFFF">
+        <div style="font-size:13px;line-height:18px;color:#6E737B;font-weight:600">3 · 최종 결제</div>
+        <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:14px"><span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{orderSummary}}</span><span style="flex:none;color:#6E737B;margin-left:8px">{{itemCountText}}</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:14px"><span>결제수단</span><span>올영PAY · 등록 카드 (시안 예시) ›</span></div>
+        <button onClick="{{toggleAgree}}" aria-pressed="{{agree}}" style="width:100%;display:flex;align-items:flex-start;gap:10px;margin-top:14px;padding:0;border:0;background:none;font-family:inherit;color:#131518;text-align:left;letter-spacing:-0.3px"><span style="{{agreeBox}}"><sc-if value="{{agree}}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></sc-if></span><span style="font-size:14px;line-height:20px">[필수] 주문 상품정보 및 결제대행 서비스 이용약관에 모두 동의합니다.</span></button>
+        <div style="font-size:13px;line-height:18px;color:#6E737B;margin-top:10px">오늘드림 주문은 온라인 전용 증정품이 제공되지 않아요. 결제 시 증정품을 꼭 확인해 주세요.</div>
+      </div>
+    </div>
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:12px 16px 35px;background:#FFFFFF;border-top:1px solid #EEEFF1">
+      <sc-if value="{{showAgreeHint}}" hint-placeholder-val="{{ true }}"><div style="font-size:13px;line-height:18px;color:#6E737B;margin-bottom:8px">필수 약관에 동의하면 결제할 수 있어요</div></sc-if>
+      <div style="display:flex;justify-content:space-between;font-size:14px;color:#3A3D42"><span>상품금액</span><span>{{subtotalText}}</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:14px;color:#3A3D42;margin-top:4px"><span>{{feeLabel}}</span><span>{{feeText}}</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:14px;color:#3A3D42;margin-top:4px"><span>할인금액</span><span>{{discountLine}}</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:8px;padding-top:8px;border-top:1px solid #EEEFF1"><span style="font-size:15px;font-weight:600">최종 결제금액</span><b style="font-size:20px">{{totalText}}</b></div>
+      <sc-if value="{{feeUnknown}}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;line-height:17px;color:#6E737B;margin-top:4px">배송비·픽업 비용은 실제 조회 값이 더해져요. 합계에서는 제외했어요.</div></sc-if>
+      <button onClick="{{pay}}" aria-disabled="{{payDisabled}}" style="{{payStyle}}">{{payText}}</button>
+    </div>
+    <sc-if value="{{isStockChanged}}" hint-placeholder-val="{{ false }}">
+      <button aria-label="닫기" onClick="{{stockClose}}" style="position:absolute;left:0;right:0;top:47px;bottom:0;border:0;padding:0;background:rgba(0,0,0,.55)"></button>
+      <div style="position:absolute;left:0;right:0;bottom:0;background:#FFFFFF;border-radius:20px 20px 0 0;padding:20px 16px 35px">
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:21px;line-height:30px;font-weight:700">픽업 주문 가능 상태가 바뀌었어요</span><button aria-label="닫기" onClick="{{stockClose}}" style="width:44px;height:44px;margin-right:-10px;border:0;background:none;display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#131518" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5.5 5.5l13 13M18.5 5.5l-13 13"></path></svg></button></div>
+        <div style="font-size:15px;line-height:22px;color:#3A3D42;margin-top:8px">{{storeName}}에서 선택한 옵션을 지금은 픽업 주문할 수 없어요. 선택한 옵션과 수량은 그대로 유지돼요.</div>
+        <div style="display:flex;gap:12px;align-items:center;margin-top:16px;padding:12px;background:#F5F6F8;border-radius:8px"><div style="flex:none;width:44px;height:56px;border:1px solid #E6E8EA;background:linear-gradient(180deg,#fff 0 38%,#E99AAE 38%)"></div><div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:600">로제 PDRN 모공결광 10매</div><div style="font-size:13px;line-height:18px;color:#6E737B">수량 1개 · {{storeName}}</div></div><span style="{{GRAYCHIP}}">픽업 주문 불가</span></div>
+        <div style="display:flex;gap:8px;margin-top:20px"><button onClick="{{stockAlt}}" style="flex:1;height:49px;border:1px solid #131518;border-radius:8px;background:#FFFFFF;color:#131518;font-size:15px;font-weight:600;font-family:inherit">다른 구매 방법 확인</button><button onClick="{{stockStore}}" style="flex:1;height:49px;border:1.5px solid #131518;border-radius:6px;background:#131518;color:#FFFFFF;font-size:17px;font-weight:700;font-family:inherit">다른 매장 선택</button></div>
+      </div>
+    </sc-if>
+  </sc-if>
+
+  <sc-if value="{{isDone}}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:0;right:0;top:47px;bottom:0;padding:48px 16px 0;box-sizing:border-box;text-align:center">
+      <div style="width:56px;height:56px;margin:0 auto;border-radius:28px;background:#131518;display:flex;align-items:center;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></div>
+      <div style="font-size:22px;line-height:30px;font-weight:700;margin-top:16px">주문이 완료됐어요</div>
+      <div style="font-size:14px;line-height:20px;color:#6E737B;margin-top:4px">프로토타입 시뮬레이션이에요. 실제 주문은 생성되지 않아요.</div>
+      <div style="margin-top:24px;padding:16px;border-radius:8px;background:#F5F6F8;text-align:left">
+        <div style="display:flex;justify-content:space-between;font-size:14px"><span style="color:#6E737B">수령 방법</span><span>{{doneMethod}}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:14px;margin-top:6px"><span style="color:#6E737B">결제금액</span><b>{{totalText}}</b></div>
+      </div>
+      <button onClick="{{restart}}" style="width:100%;height:49px;margin-top:24px;border:1.5px solid #131518;border-radius:6px;background:#131518;color:#FFFFFF;font-size:18px;font-weight:700;font-family:inherit">다른 시나리오 해보기</button>
+    </div>
+  </sc-if>
+
+
+  <div style="position:absolute;left:0;right:0;top:0;height:47px;display:flex;align-items:center;padding:0 12px;box-sizing:border-box;background:#FFFFFF">
+    <sc-if value="{{notHome}}" hint-placeholder-val="{{ false }}"><button onClick="{{restart}}" style="height:32px;padding:0 10px;border:1px solid #DCDFE3;border-radius:16px;background:#FFFFFF;font-size:12px;color:#3A3D42;font-family:inherit">← 시나리오 선택</button></sc-if>
+    <span style="margin-left:auto;font-size:12px;color:#6E737B">{{flowLabel}}</span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.timers = [];
+    this.state = this.fresh('home', 'A');
+  }
+  fresh(screen, flow) {
+    return { screen: screen, flow: flow, panelOpen: false, recv: 'today', altStage: 'checking', altSel: null, stdTry: 0, stores: {}, dTried: false, pickStore: null, method: 'today', slot: 's1', recs: {}, g1Open: false, benefitsOpen: false, usePoint: false, agree: false, triedPay: false, stockHit: false, restocked: false, returnTo: 'alt' };
+  }
+  componentWillUnmount() { this.timers.forEach(function (t) { clearTimeout(t); }); }
+  later(fn, ms) { this.timers.push(setTimeout(fn, ms)); }
+  openAlt() {
+    this.setState({ screen: 'alt', altStage: 'checking' });
+    this.later(() => {
+      if (this.state.flow === 'B' && this.state.stdTry === 0) this.setState({ altStage: 'fail', stdTry: 1 });
+      else this.setState({ altStage: 'done' });
+    }, 1200);
+  }
+  checkStore(id) {
+    const s = Object.assign({}, this.state.stores); s[id] = 'checking';
+    this.setState({ stores: s });
+    this.later(() => {
+      const r = Object.assign({}, this.state.stores);
+      const flow = this.state.flow;
+      const table = { A: (flow === 'B' ? 'no' : 'ok'), B: 'stockNoOrder', C: 'no', D: 'no' };
+      if (id === 'D' && !this.state.dTried) { r[id] = 'fail'; this.setState({ stores: r, dTried: true }); return; }
+      r[id] = table[id];
+      this.setState({ stores: r });
+    }, 800);
+  }
+  chooseStore(id) {
+    const rt = this.state.returnTo;
+    if (rt === 'detail') this.setState({ pickStore: id, recv: 'pickup', screen: 'detail', panelOpen: true });
+    else if (rt === 'alt') this.setState({ pickStore: id, screen: 'alt', altSel: 'pickup' });
+    else this.setState({ pickStore: id, method: 'pickup', screen: 'checkout' });
+  }
+  renderVals() {
+    const st = this.state;
+    const fmt = function (n) { return n.toLocaleString('ko-KR') + '원'; };
+    const chip = function (bg, fg, extra) { return 'display:inline-flex;align-items:center;padding:1px 5px;border-radius:2px;background:' + bg + ';color:' + fg + ';font-size:13px;line-height:18px;font-weight:600;white-space:nowrap;' + (extra || ''); };
+    const GRAY = chip('#EEF0F2', '#5E636B');
+    const OK = chip('#EBF6EF', '#1D7A4C');
+    const WARN = chip('#FFF4E5', '#8A5200');
+    const PENDING = chip('#FFFFFF', '#5E636B', 'border:1px dashed #ADB1B8;line-height:16px;');
+    const rOn = 'display:block;width:20px;height:20px;border-radius:50%;box-sizing:border-box;border:6px solid #131518;background:#FFFFFF';
+    const rOff = 'display:block;width:20px;height:20px;border-radius:50%;box-sizing:border-box;border:1.5px solid #ADB1B8;background:#FFFFFF';
+    const rDis = 'display:block;width:20px;height:20px;border-radius:50%;background:#E4E6E9';
+    const sc = st.screen;
+    const flow = st.flow;
+    const sNames = { A: 'A매장 (시안 예시)', B: 'B매장 (시안 예시)', C: 'C매장 (시안 예시)', D: 'D매장 (시안 예시)' };
+    const sAddr = { A: '서울 구로구 ○○로 00 · 0.4km', B: '서울 구로구 ○○로 00 · 0.9km', C: '서울 영등포구 ○○로 00 · 1.3km', D: '서울 금천구 ○○로 00 · 2.1km' };
+    const storeName = st.pickStore ? sNames[st.pickStore] : '';
+    const ids = ['A', 'B', 'C', 'D'];
+    const bad = (v) => v === 'no' || v === 'stockNoOrder';
+    const storeAllFailed = ids.every((id) => bad(st.stores[id]));
+    const pickOk = !!st.pickStore && st.stores[st.pickStore] === 'ok';
+    const pickNone = !pickOk && storeAllFailed;
+    const pickNeed = !pickOk && !pickNone;
+    const altDone = st.altStage === 'done';
+    const stdLoading = st.altStage === 'checking';
+    const stdFail = st.altStage === 'fail';
+    const stdOk = altDone && flow !== 'B';
+    const allNone = flow === 'B' && altDone && pickNone;
+    const isC = flow === 'C';
+    const stdSel = st.altSel === 'std' && stdOk;
+    const pickSel = st.altSel === 'pickup' && pickOk;
+    const recDefs = [{ id: 'r1', name: '추천 상품 A (시안 예시)', price: 12000 }, { id: 'r2', name: '추천 상품 B (시안 예시)', price: 9000 }];
+    let subtotal = 10000;
+    recDefs.forEach((r) => { if (st.recs[r.id]) subtotal += r.price; });
+    const free = subtotal >= 30000;
+    const base = { s1: 5000, s2: 2500, s3: 2500 };
+    const times = { s1: '12:45 ~ 13:45', s2: '15:00 ~ 16:00', s3: '22:00 ~ 24:00' };
+    const fee = st.method === 'today' ? (free ? 0 : base[st.slot]) : null;
+    const point = st.usePoint ? 690 : 0;
+    const total = subtotal + (fee || 0) - point;
+    const slots = ['s1', 's2', 's3'].map((id) => {
+      const sel = st.slot === id;
+      return {
+        time: times[id], selected: sel,
+        pick: () => this.setState({ slot: id }),
+        feeText: free ? '무료' : fmt(base[id]),
+        cardStyle: 'width:100%;display:flex;align-items:center;gap:12px;height:52px;margin-top:8px;padding:0 14px;border-radius:8px;box-sizing:border-box;font-family:inherit;color:#131518;text-align:left;letter-spacing:-0.3px;border:' + (sel ? '1.5px solid #131518' : '1px solid #E6E8EA') + ';background:' + (sel ? '#F7F8FA' : '#FFFFFF'),
+        radioStyle: 'flex:none;' + (sel ? rOn : rOff),
+        timeStyle: 'flex:1;font-size:16px;' + (sel ? 'font-weight:600' : ''),
+        feeStyle: 'font-size:16px;' + (sel ? 'font-weight:700' : 'color:#3A3D42')
+      };
+    });
+    const segOn = 'flex:1;height:44px;border:1.5px solid #131518;border-radius:6px;background:#FFFFFF;color:#131518;font-size:16px;font-weight:600;font-family:inherit';
+    const segOff = 'flex:1;height:44px;border:1px solid #DCDFE3;border-radius:6px;background:#FFFFFF;color:#6E737B;font-size:16px;font-family:inherit';
+    const pillOn = 'height:32px;padding:0 14px;border:0;border-radius:16px;background:#131518;color:#FFFFFF;font-size:14px;font-weight:600;font-family:inherit';
+    const pillOff = 'height:32px;padding:0 14px;border:0;border-radius:16px;background:transparent;color:#8C9097;font-size:14px;font-family:inherit';
+    const btnBase = 'flex:none;height:44px;padding:0 12px;border-radius:8px;font-size:14px;font-family:inherit;';
+    const stores = ids.map((id) => {
+      const s = st.stores[id] || 'none';
+      const map = {
+        none: ['픽업 가능 여부 확인 필요', PENDING, '확인하기', btnBase + 'border:1px solid #DCDFE3;background:#FFFFFF;color:#3A3D42', false],
+        checking: ['확인 중…', GRAY, '확인 중', btnBase + 'border:0;background:#F0F1F4;color:#A5A9AF', true],
+        ok: ['픽업 주문 가능', OK, '이 매장 선택', btnBase + 'border:1px solid #131518;background:#131518;color:#FFFFFF;font-weight:600', false],
+        stockNoOrder: ['매장 재고 있음 · 픽업 주문 불가', GRAY, '선택 불가', btnBase + 'border:0;background:#F0F1F4;color:#A5A9AF', true],
+        no: ['픽업 불가 · 재고 없음', GRAY, '선택 불가', btnBase + 'border:0;background:#F0F1F4;color:#A5A9AF', true],
+        fail: ['픽업 가능 여부를 확인하지 못했어요', WARN, '다시 확인', btnBase + 'border:1px solid #131518;background:#FFFFFF;color:#131518;font-weight:600', false]
+      }[s];
+      return {
+        name: sNames[id], addr: sAddr[id], chip: map[0], chipStyle: map[1], btnText: map[2], btnStyle: map[3], disabled: map[4],
+        tap: () => { if (s === 'ok') this.chooseStore(id); else if (s === 'none' || s === 'fail') this.checkStore(id); }
+      };
+    });
+    const productName = isC ? '마데카소사이드 흔적리페어 10+1매' : '로제 PDRN 모공결광 10매';
+    const addedItems = recDefs.filter((r) => st.recs[r.id]).map((r) => ({ name: r.name, priceText: fmt(r.price) }));
+    const recs = recDefs.map((r) => {
+      const added = !!st.recs[r.id];
+      return {
+        name: r.name, priceText: fmt(r.price), added: added, btnText: added ? '담김 · 빼기' : '담기',
+        toggle: () => { const n = Object.assign({}, this.state.recs); n[r.id] = !n[r.id]; this.setState({ recs: n }); },
+        btnStyle: 'width:100%;height:44px;margin-top:8px;border-radius:6px;font-size:13px;font-family:inherit;' + (added ? 'border:1px solid #DCDFE3;background:#F5F6F8;color:#3A3D42' : 'border:1px solid #131518;background:#FFFFFF;color:#131518;font-weight:600')
+      };
+    });
+    const doneMethod = st.method === 'today' ? '오늘드림 · 11/17 ' + times[st.slot] : st.method === 'pickup' ? '매장 픽업 · ' + storeName : '일반배송';
+    const canBuy = stdSel || pickSel;
+    const rowBase = 'display:flex;gap:12px;align-items:flex-start;margin-top:8px;padding:14px;border-radius:8px;box-sizing:border-box;';
+    const recvLine = st.method === 'today' ? '오늘드림 · 11/17 (화) ' + times[st.slot].replace(/ /g, '') : st.method === 'pickup' ? '매장 픽업 · ' + storeName : '일반배송';
+    const feeLine = fee === null ? '배송비 조회 값 반영' : '배송비 ' + (free ? '무료' : fmt(fee));
+    const instantMet = subtotal >= 31000;
+    return {
+      GRAYCHIP: GRAY,
+      isHome: sc === 'home', notHome: sc !== 'home',
+      flowLabel: sc === 'home' ? '프로토타입 · 시뮬레이션' : 'Flow ' + flow + ' · 시뮬레이션',
+      showDetail: ['detail', 'options', 'alt', 'restock', 'restockDone'].indexOf(sc) >= 0,
+      isOptions: sc === 'options', isAlt: sc === 'alt', isRestock: sc === 'restock', isRestockDone: sc === 'restockDone',
+      isStore: sc === 'store', isCart: sc === 'cart', isCheckout: sc === 'checkout' || sc === 'stockChanged', isStockChanged: sc === 'stockChanged', isDone: sc === 'done',
+      startA: () => this.setState(this.fresh('detail', 'A')),
+      startB: () => this.setState(this.fresh('detail', 'B')),
+      startC: () => this.setState(this.fresh('cart', 'C')),
+      startD: () => this.setState(this.fresh('detail', 'D')),
+      restart: () => this.setState(this.fresh('home', 'A')),
+      panelOpen: st.panelOpen, panelClosed: !st.panelOpen,
+      togglePanel: () => this.setState({ panelOpen: !this.state.panelOpen }),
+      recvToday: st.recv === 'today', recvPickup: st.recv === 'pickup',
+      segToday: st.recv === 'today' ? segOn : segOff, segPickup: st.recv === 'pickup' ? segOn : segOff,
+      setToday: () => this.setState({ recv: 'today' }), setPickup: () => this.setState({ recv: 'pickup' }),
+      recvTitle: st.recv === 'today' ? '수령 방법 · 오늘드림' : '수령 방법 · 매장 픽업',
+      recvSub: st.recv === 'today' ? '우리집' : (storeName || '매장 선택 필요'),
+      hasStore: !!st.pickStore, noStore: !st.pickStore, storeName: storeName,
+      storeFromDetail: () => this.setState({ screen: 'store', returnTo: 'detail' }),
+      storeFromAlt: () => this.setState({ screen: 'store', returnTo: 'alt' }),
+      storeFromCart: () => this.setState({ screen: 'store', returnTo: 'cart' }),
+      storeFromCheckout: () => this.setState({ screen: 'store', returnTo: 'checkout' }),
+      storeBack: () => this.setState({ screen: this.state.returnTo }),
+      openOptions: () => this.setState({ screen: 'options' }),
+      closeSheet: () => this.setState({ screen: 'detail' }),
+      openAlt: () => this.openAlt(),
+      openRestock: () => this.setState({ screen: 'restock' }),
+      submitRestock: () => this.setState({ screen: 'restockDone', restocked: true }),
+      restockOption: '로제 PDRN 모공결광 10매',
+      restocked: st.restocked,
+      restockTap: () => { if (!this.state.restocked) this.setState({ screen: 'restock' }); },
+      restockLinkText: st.restocked ? '알림 신청됨' : '재입고 알림',
+      restockLinkStyle: 'height:44px;padding:0 6px;border:0;background:none;font-size:14px;font-family:inherit;' + (st.restocked ? 'color:#1D7A4C;font-weight:600' : 'color:#5E636B;text-decoration:underline;text-underline-offset:3px'),
+      radioDis: rDis,
+      stdLoading: stdLoading, stdFail: stdFail, stdOk: stdOk, stdSelected: stdSel,
+      stdChip: stdLoading ? '재고 확인 중…' : (stdFail ? '재고 확인 필요' : (stdOk ? '구매 가능' : '구매 불가')),
+      stdChipStyle: stdLoading ? GRAY : (stdFail ? WARN : (stdOk ? OK : GRAY)),
+      stdDesc: stdLoading ? '동일 옵션의 일반배송 재고를 확인하고 있어요.' : (stdFail ? '재고 정보를 불러오지 못했어요. 품절은 아니에요.' : (stdOk ? '배송비와 도착 예정일은 주문 단계에서 확인할 수 있어요.' : '일반배송 재고가 없어요.')),
+      stdRadio: stdOk ? (stdSel ? rOn : rOff) : rDis,
+      stdRowStyle: rowBase + 'border:' + (stdSel ? '1.5px solid #131518' : '1px solid #E6E8EA') + (stdOk ? ';cursor:pointer' : ''),
+      selStd: () => { if (stdOk) this.setState({ altSel: 'std' }); },
+      pickSelected: pickSel,
+      pickChip: pickOk ? '픽업 주문 가능' : (pickNone ? '확인한 매장 픽업 불가' : '매장 선택 필요'),
+      pickChipStyle: pickOk ? OK : (pickNone ? GRAY : PENDING),
+      pickDesc: pickOk ? storeName + ' · 선택한 옵션 · 수량 1개로 주문해요' : (pickNone ? '선택한 매장 기준이에요. 다른 매장은 아직 확인하지 않았어요.' : '매장을 선택하면 픽업 주문 가능 여부를 확인할 수 있어요.'),
+      pickRadio: pickOk ? (pickSel ? rOn : rOff) : (pickNone ? rDis : rOff),
+      pickRowStyle: rowBase + 'border:' + (pickSel ? '1.5px solid #131518' : '1px solid #E6E8EA') + (pickOk ? ';cursor:pointer' : ''),
+      selPick: () => { if (pickOk) this.setState({ altSel: 'pickup' }); },
+      pickOk: pickOk, pickNone: pickNone, pickNeed: pickNeed,
+      allNone: allNone, notAllNone: !allNone,
+      ctaDisabled: !canBuy,
+      ctaText: stdSel ? '일반배송으로 구매하기' : (pickSel ? '픽업으로 구매하기' : '구매 방법을 선택해 주세요'),
+      ctaStyle: 'width:100%;height:49px;border-radius:6px;font-size:18px;font-weight:700;font-family:inherit;' + (canBuy ? 'border:1.5px solid #131518;background:#131518;color:#FFFFFF' : 'border:0;background:#DCDFE3;color:#5E636B'),
+      ctaNote: pickSel,
+      ctaTap: () => { if (stdSel) this.setState({ method: 'standard', screen: 'checkout' }); else if (pickSel) this.setState({ method: 'pickup', screen: 'checkout' }); },
+      stores: stores, storeAllFailed: storeAllFailed,
+      productName: productName, productColor: isC ? '#69BAB5' : '#E99AAE',
+      freeShip: free, notFree: !free,
+      remainText: fmt(Math.max(0, 30000 - subtotal)),
+      progressPct: Math.min(100, Math.round(subtotal / 300)) + '%',
+      subtotalText: fmt(subtotal),
+      cartFeeText: free ? '무료' : '배송 시간에 따라 2,500~5,000원',
+      recs: recs, addedItems: addedItems,
+      scrollRecs: () => { const n = Object.assign({}, this.state.recs); if (!n.r1) n.r1 = true; else n.r2 = true; this.setState({ recs: n }); },
+      goCheckout: () => this.setState({ method: 'today', screen: 'checkout' }),
+      checkoutBack: () => this.setState({ screen: isC ? 'cart' : 'alt' }),
+      showMethodToggle: isC, showMethodLabel: !isC, methodLabel: st.method === 'pickup' ? '매장 픽업' : '일반배송', isToday: st.method === 'today', isPickup: st.method === 'pickup', isStandard: st.method === 'standard',
+      pillToday: st.method === 'today' ? pillOn : pillOff, pillPickup: st.method === 'pickup' ? pillOn : pillOff,
+      methodToday: () => { if (isC) this.setState({ method: 'today' }); },
+      methodPickup: () => { if (this.state.pickStore && this.state.stores[this.state.pickStore] === 'ok') this.setState({ method: 'pickup' }); else this.setState({ screen: 'store', returnTo: 'checkout' }); },
+      slots: slots,
+      freeLine: free ? '30,000원 이상 주문으로 오늘드림 무료배송이 적용됐어요' : fmt(Math.max(0, 30000 - subtotal)) + ' 더 담으면 오늘드림 무료배송 (기준 30,000원)',
+      g1Open: st.g1Open, g1Label: st.g1Open ? '접기' : '펼치기', g1Chevron: st.g1Open ? 'M5 15l7-7 7 7' : 'M5 9l7 7 7-7',
+      toggleG1: () => this.setState({ g1Open: !this.state.g1Open }),
+      recvLine: recvLine, feeLine: feeLine,
+      feeLabel: st.method === 'today' ? '배송비 (' + times[st.slot].replace(/ /g, '') + ')' : '배송비',
+      feeText: fee === null ? '조회 값 반영' : (free ? '무료' : fmt(fee)),
+      feeUnknown: fee === null,
+      benefitsOpen: st.benefitsOpen,
+      toggleBenefits: () => this.setState({ benefitsOpen: !this.state.benefitsOpen }),
+      benefitChevron: st.benefitsOpen ? 'M5 15l7-7 7 7' : 'M5 9l7 7 7-7',
+      discountLabel: '적용 ' + (point ? '-' + fmt(point) : '0원'),
+      discountLine: point ? '-' + fmt(point) : '0원',
+      togglePoint: () => this.setState({ usePoint: !this.state.usePoint }),
+      pointBtnText: st.usePoint ? '사용 취소' : '전액사용',
+      pointBtnStyle: 'height:36px;padding:0 14px;border:0;border-radius:6px;font-size:14px;font-family:inherit;' + (st.usePoint ? 'background:#131518;color:#FFFFFF' : 'background:#F0F1F4;color:#131518'),
+      instantChip: instantMet ? '조건 충족' : '조건 미충족',
+      instantChipStyle: instantMet ? OK : PENDING,
+      instantText: instantMet ? '올영PAY X 올리브영 현대카드 Plus · 구매 금액 조건은 충족했어요. 첫 결제 여부는 결제 단계에서 확인해요.' : '올영PAY X 올리브영 현대카드 Plus · 31,000원 이상 구매 시 30,000원 할인. 지금은 적용되지 않아 결제금액에 포함하지 않았어요.',
+      orderSummary: productName, itemCountText: '총 ' + (1 + addedItems.length) + '개',
+      totalText: fmt(total),
+      agree: st.agree,
+      toggleAgree: () => this.setState({ agree: !this.state.agree }),
+      agreeBox: 'flex:none;width:20px;height:20px;border-radius:2px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;' + (st.agree ? 'background:#131518' : 'border:1px solid #CED2D6;background:#FFFFFF'),
+      showAgreeHint: !st.agree,
+      payDisabled: !st.agree,
+      payText: fmt(total) + ' 결제하기',
+      payStyle: 'width:100%;height:49px;margin-top:10px;border:0;border-radius:6px;font-size:18px;font-weight:700;font-family:inherit;' + (st.agree ? 'background:#131518;color:#FFFFFF' : 'background:#DCDFE3;color:#5E636B'),
+      pay: () => {
+        if (!this.state.agree) { this.setState({ triedPay: true }); return; }
+        if (flow === 'D' && this.state.method === 'pickup' && !this.state.stockHit) {
+          const r = Object.assign({}, this.state.stores); r[this.state.pickStore] = 'no';
+          this.setState({ stores: r, stockHit: true, screen: 'stockChanged', altSel: null });
+          return;
+        }
+        this.setState({ screen: 'done' });
+      },
+      stockClose: () => this.setState({ screen: 'checkout' }),
+      stockAlt: () => this.openAlt(),
+      stockStore: () => this.setState({ screen: 'store', returnTo: 'checkout' }),
+      doneMethod: doneMethod
+    };
+  }
+}
+
+</script>
+</body>
+</html>

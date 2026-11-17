@@ -1,0 +1,268 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "AltLoading.dc.html": {
+      "h": 844,
+      "title": "P0 · 다른 구매 방법 ① 일반배송 확인 중",
+      "w": 390,
+      "x": 470,
+      "y": 4480
+    },
+    "AltMethods.dc.html": {
+      "h": 844,
+      "title": "P0 · 다른 구매 방법 ④ 일반배송 구매 가능",
+      "w": 390,
+      "x": 1880,
+      "y": 4480
+    },
+    "AltMethodsNone.dc.html": {
+      "h": 844,
+      "title": "P0 · 다른 구매 방법 ⑤ 확인한 방법 모두 불가",
+      "w": 390,
+      "x": 2350,
+      "y": 4480
+    },
+    "AltPickup.dc.html": {
+      "h": 844,
+      "title": "P0 · 다른 구매 방법 ③ 픽업 주문 가능",
+      "w": 390,
+      "x": 1410,
+      "y": 4480
+    },
+    "Cart.dc.html": {
+      "h": 844,
+      "title": "P1 · 장바구니 무료배송 안내",
+      "w": 390,
+      "x": 0,
+      "y": 6688
+    },
+    "CheckoutAsis.dc.html": {
+      "h": 2860,
+      "title": "AS-IS 주문/결제 전체 스크롤",
+      "w": 390,
+      "x": 940,
+      "y": 1360
+    },
+    "CheckoutSlot.dc.html": {
+      "h": 844,
+      "title": "P1 · 배송 날짜·시간대별 배송비",
+      "w": 390,
+      "x": 470,
+      "y": 6688
+    },
+    "CheckoutTobe.dc.html": {
+      "h": 844,
+      "title": "P2 · 주문/결제 3그룹 (기본)",
+      "w": 390,
+      "x": 0,
+      "y": 7896
+    },
+    "DetailAsis.dc.html": {
+      "h": 844,
+      "title": "AS-IS 상품 상세 하단",
+      "w": 390,
+      "x": 0,
+      "y": 1360
+    },
+    "DetailCollapsed.dc.html": {
+      "h": 844,
+      "title": "P2 · 상세 하단 패널 접힘",
+      "w": 390,
+      "x": 940,
+      "y": 7896
+    },
+    "DetailExpanded.dc.html": {
+      "h": 844,
+      "title": "P2 · 상세 하단 패널 펼침 (매장 픽업)",
+      "w": 390,
+      "x": 1410,
+      "y": 7896
+    },
+    "Main.dc.html": {
+      "h": 844,
+      "title": "AS-IS 옵션 선택 (일시품절)",
+      "w": 390,
+      "x": 470,
+      "y": 1360
+    },
+    "OptionsTobe.dc.html": {
+      "h": 844,
+      "title": "P0 · 품절 옵션 바텀시트",
+      "w": 390,
+      "x": 0,
+      "y": 4480
+    },
+    "Pickup.dc.html": {
+      "h": 844,
+      "title": "P0 · 픽업 매장 선택",
+      "w": 390,
+      "x": 0,
+      "y": 5584
+    },
+    "Prototype.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "title": "인터랙티브 프로토타입 · Flow A/B/C/D",
+      "w": 390,
+      "x": 0,
+      "y": 0
+    },
+    "Restock.dc.html": {
+      "h": 844,
+      "title": "P0 · 재입고 알림 신청",
+      "w": 390,
+      "x": 1410,
+      "y": 5584
+    },
+    "RestockDone.dc.html": {
+      "h": 844,
+      "title": "P0 · 재입고 알림 완료",
+      "w": 390,
+      "x": 1880,
+      "y": 5584
+    },
+    "AltFail.dc.html": {
+      "h": 844,
+      "title": "P0 · 다른 구매 방법 ② 일반배송 조회 실패",
+      "w": 390,
+      "x": 940,
+      "y": 4480
+    },
+    "PickupEmpty.dc.html": {
+      "h": 844,
+      "title": "P0 · 픽업 매장 검색 결과 없음",
+      "w": 390,
+      "x": 470,
+      "y": 5584
+    },
+    "StockChanged.dc.html": {
+      "h": 844,
+      "title": "P0 · 주문 직전 픽업 재고 변동",
+      "w": 390,
+      "x": 940,
+      "y": 5584
+    },
+    "CheckoutTobeOpen.dc.html": {
+      "h": 1700,
+      "title": "P2 · 주문/결제 3그룹 (펼침)",
+      "w": 390,
+      "x": 470,
+      "y": 7896
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-11-17T09:00:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "noteOrder": [
+    "t0",
+    "t1",
+    "t2",
+    "t2b",
+    "t3",
+    "t4",
+    "s1",
+    "s2",
+    "s3"
+  ],
+  "notes": {
+    "s1": {
+      "fill": "blue",
+      "text": "프로토타입 사용법: 시나리오를 고르면 상세 → 옵션 → 다른 구매 방법 → 매장 선택 → 주문/결제 → 완료까지 실제로 눌러볼 수 있어요. 재고 조회·결제는 시뮬레이션이에요.\nFlow A: 품절 → 픽업 구매\nFlow B: 일반배송 조회 실패 → 모든 방식 불가 → 재입고 알림\nFlow C: 무료배송 미달 → 날짜·시간대별 배송비 비교 · 혜택 펼침 · 약관 동의\nFlow D: 주문 직전 픽업 재고 변동 → 다른 방법으로 이어가기",
+      "w": 400,
+      "x": 470,
+      "y": 0
+    },
+    "s2": {
+      "fill": "gray",
+      "text": "비공식 포트폴리오 개선안입니다. 실제 올리브영 앱 캡처를 기준으로 UI를 맞췄고, 이름·주소·연락처·카드 정보는 가렸습니다. 상품 이미지·매장·추천 상품은 시안 예시입니다. 배송비(5,000/2,500/2,500원), 무료배송 기준 30,000원, 재입고 정책 문구는 프로젝트에서 확인한 값만 썼고, 일반배송·픽업 비용처럼 확인되지 않은 값은 '조회 값'으로 표시했습니다.",
+      "w": 400,
+      "x": 930,
+      "y": 0
+    },
+    "s3": {
+      "text": "AS-IS 관찰\n· 시간대별 배송비가 옆에 표시되지 않고, 선택해야 하단 배송비가 바뀜\n· 무료배송 기준과 남은 금액 안내 없음\n· 배송·할인·결제 정보가 한 페이지에 길게 이어짐\n· 품절 옵션의 행동은 재입고 알림뿐",
+      "w": 380,
+      "x": 1410,
+      "y": 1360
+    },
+    "t0": {
+      "kind": "title1",
+      "maxW": 1330,
+      "text": "인터랙티브 프로토타입 (Play로 실행)",
+      "w": 240,
+      "x": 0,
+      "y": -260
+    },
+    "t1": {
+      "kind": "title1",
+      "maxW": 1330,
+      "text": "AS-IS · 실제 앱 구매 흐름",
+      "w": 240,
+      "x": 0,
+      "y": 1100
+    },
+    "t2": {
+      "kind": "title1",
+      "maxW": 2820,
+      "text": "P0 · 품절 이후 다른 구매 방법",
+      "w": 240,
+      "x": 0,
+      "y": 4220
+    },
+    "t3": {
+      "kind": "title1",
+      "maxW": 860,
+      "text": "P1 · 무료배송과 배송 시간별 배송비",
+      "w": 240,
+      "x": 0,
+      "y": 6428
+    },
+    "t4": {
+      "kind": "title1",
+      "maxW": 1880,
+      "text": "P2 · 결제 정보 구조와 상세 하단 패널",
+      "w": 240,
+      "x": 0,
+      "y": 7636
+    },
+    "t2b": {
+      "kind": "title1",
+      "maxW": 2350,
+      "text": "P0 · 매장 선택 · 재입고 알림 · 예외 상태",
+      "w": 240,
+      "x": 0,
+      "y": 5324
+    }
+  },
+  "order": [
+    "Prototype.dc.html",
+    "DetailAsis.dc.html",
+    "Main.dc.html",
+    "CheckoutAsis.dc.html",
+    "OptionsTobe.dc.html",
+    "AltLoading.dc.html",
+    "AltFail.dc.html",
+    "AltPickup.dc.html",
+    "AltMethods.dc.html",
+    "AltMethodsNone.dc.html",
+    "Pickup.dc.html",
+    "PickupEmpty.dc.html",
+    "StockChanged.dc.html",
+    "Restock.dc.html",
+    "RestockDone.dc.html",
+    "Cart.dc.html",
+    "CheckoutSlot.dc.html",
+    "CheckoutTobe.dc.html",
+    "CheckoutTobeOpen.dc.html",
+    "DetailCollapsed.dc.html",
+    "DetailExpanded.dc.html"
+  ],
+  "pages": [],
+  "title": "오늘드림 품절 이후 시안"
+}
