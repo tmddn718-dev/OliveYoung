@@ -1,0 +1,334 @@
+<title>오늘드림 품절 이후 시안</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: tab strip + one 390px phone frame (screens) or a wide panel (tokens, references).
+   Phone styling follows the real app screenshots the user supplied; status colors follow Design System v1.0 [P]. */
+:root{--bg:#EEF0EE;--fg:#131518;--mut:#5F6661;--chip:#DFE3DF;--on:#111;--onfg:#fff;--panel:#fff;--pline:#DADFDA;--lnk:#2457A7;
+--c-canvas:#FFFFFF;--c-subtle:#F7F8F7;--c-text:#111111;--c-text2:#666666;--c-text3:#8A8A8A;--c-line:#EBEBEB;--c-strong:#DDDDDD;
+--c-act:#111111;--c-actfg:#FFFFFF;--c-bad:#B42318;--c-badbg:#FFF3F1;--c-ok:#167347;--c-okbg:#ECF8F0;--c-info:#2457A7;--c-infobg:#F0F5FF;
+--c-pink:#E5427F;--c-pinkbg:#FCEAF1;--c-off:#F2495F;--r-sm:4px;--r-md:8px;--r-lg:12px;--r-pill:999px;
+--font:"Pretendard","Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121412;--fg:#ECEFEC;--mut:#A0A8A2;--chip:#262A26;--on:#ECEFEC;--onfg:#131518;--panel:#1B1E1B;--pline:#2E332E;--lnk:#8DB3F2;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121412;--fg:#ECEFEC;--mut:#A0A8A2;--chip:#262A26;--on:#ECEFEC;--onfg:#131518;--panel:#1B1E1B;--pline:#2E332E;--lnk:#8DB3F2;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);margin:0;padding-block:20px 32px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1{font-size:18px;margin:0 0 4px;text-wrap:balance}
+.lede{font-size:13px;color:var(--mut);margin:0 0 14px;max-width:62ch;line-height:1.6}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;margin-bottom:10px;scrollbar-width:thin}
+.tabs button{flex:none;border:0;border-radius:var(--r-pill);min-height:40px;padding:0 14px;font:500 13px var(--font);background:var(--chip);color:var(--fg);cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--on);color:var(--onfg)}
+.tabs .sep{flex:none;width:1px;background:var(--pline);margin:4px 4px}
+.stage{display:flex;gap:28px;justify-content:center;align-items:flex-start;flex-wrap:wrap}
+.note{flex:1 1 260px;max-width:340px;font-size:13px;line-height:1.65;color:var(--mut);min-width:0}
+.note b{color:var(--fg);font-size:14px}
+.note p{margin:6px 0 0}
+.note ul{margin:10px 0 0;padding-left:18px}
+.wide{flex:1 1 100%;max-width:880px;background:var(--panel);border:1px solid var(--pline);border-radius:var(--r-lg);padding:20px;color:var(--fg);font-size:13px;line-height:1.6}
+.wide h2{font-size:15px;margin:0 0 4px}
+.wide h2:not(:first-child){margin-top:22px}
+.wide p{margin:0 0 10px;color:var(--mut)}
+.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.sw div{border:1px solid var(--pline);border-radius:var(--r-md);overflow:hidden;font-size:12px}
+.sw i{display:block;height:36px}
+.sw span{display:block;padding:6px 8px;color:var(--fg)}
+.sw code{font-size:11px;color:var(--mut);display:block}
+.ref{display:block;border-top:1px solid var(--pline);padding:12px 0}
+.ref a{color:var(--lnk);font-weight:600}
+.ref p{margin:2px 0 0}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:12px}
+th,td{text-align:left;padding:6px 8px;border-top:1px solid var(--pline);vertical-align:top;white-space:nowrap}
+/* phone */
+.phone{width:100%;max-width:390px;height:800px;max-height:calc(100dvh - 130px);min-height:620px;background:var(--c-canvas);color:var(--c-text);border-radius:36px;border:8px solid #111;position:relative;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.2);flex:0 1 390px;font-size:14px;line-height:20px}
+@media(max-width:480px){.phone{border:0;border-radius:0;max-height:none;height:calc(100dvh - 130px);box-shadow:none}}
+.scr{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--c-canvas)}
+.sb{height:28px;flex:none;display:flex;justify-content:space-between;padding:8px 22px 0;font-size:11px;font-weight:700}
+.tb{flex:none;height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 12px}
+.tb .r{display:flex;gap:4px}
+.tb svg,.ib svg{width:24px;height:24px;stroke:#111;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ib{width:44px;height:44px;border:0;background:none;display:grid;place-items:center;cursor:pointer;padding:0}
+.hd{flex:none;height:48px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;font-weight:600;font-size:16px;text-align:center}
+.body{flex:1;overflow-y:auto;min-height:0}
+.pad{padding:16px}
+.foot{flex:none;padding:10px 16px calc(12px + env(safe-area-inset-bottom,0px));background:var(--c-canvas)}
+.foot .why{font-size:12px;line-height:18px;color:var(--c-text3);text-align:center;margin:8px 0 0}
+.foot .why.i{color:var(--c-info)}
+button{font-family:var(--font)}
+.btn{width:100%;height:52px;border:1.5px solid var(--c-act);border-radius:var(--r-md);font-size:16px;font-weight:600;cursor:pointer;background:var(--c-act);color:var(--c-actfg)}
+.btn.sec{background:#fff;color:var(--c-text)}
+.btn:disabled{background:var(--c-line);border-color:var(--c-line);color:var(--c-text3);cursor:default}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sm{border:1.5px solid var(--c-act);border-radius:var(--r-md);padding:0 16px;min-height:44px;font-size:14px;font-weight:600;cursor:pointer;background:var(--c-act);color:var(--c-actfg);white-space:nowrap}
+.sm.sec{background:#fff;color:var(--c-text);border-color:var(--c-strong)}
+.sm:disabled{background:var(--c-line);border-color:var(--c-line);color:var(--c-text3);cursor:default}
+.txt{border:0;background:none;min-height:44px;padding:0 4px;font-size:13px;font-weight:600;color:var(--c-text);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+button:focus-visible,input:focus-visible,.card:focus-visible,.dd:focus-visible,.orow:focus-visible{outline:2px solid var(--c-info);outline-offset:2px}
+/* badges: text only */
+.pill{display:inline-block;border-radius:var(--r-sm);padding:1px 6px;font-size:12px;line-height:18px;font-weight:600;vertical-align:middle}
+.pill.bad{background:var(--c-badbg);color:var(--c-bad)}
+.pill.ok{background:var(--c-okbg);color:var(--c-ok)}
+.pill.info{background:var(--c-infobg);color:var(--c-info)}
+.pill.neu{background:var(--c-line);color:var(--c-text2)}
+.pill.pink{background:var(--c-pinkbg);color:var(--c-pink);font-weight:500}
+.pill.gray{background:#9B9B9B;color:#fff}
+.notice{background:var(--c-badbg);border-radius:var(--r-lg);padding:14px 16px}
+.notice b{display:block;font-size:14px;font-weight:600;color:var(--c-bad)}
+.notice p{margin:2px 0 0;font-size:13px;line-height:18px;color:var(--c-text2)}
+.hero{flex:1;background:linear-gradient(160deg,#C9E9EE,#E9F5F2 55%,#F7DCE6);display:grid;place-items:center;color:#7A8F93;font-size:12px;min-height:0}
+.pinfo{padding:14px 16px 20px}
+.pinfo .br{display:flex;justify-content:space-between;align-items:center;font-size:15px}
+.pinfo .nm{font-size:16px;line-height:24px;margin-top:8px}
+.dim{position:absolute;inset:28px 0 0;background:rgba(0,0,0,.5);display:flex;flex-direction:column;justify-content:flex-end}
+.sheet{background:#fff;border-radius:20px 20px 0 0;max-height:94%;display:flex;flex-direction:column;min-height:0;padding-top:6px}
+.grab{display:grid;place-items:center;height:22px}
+.grab svg{width:36px;height:12px;stroke:#BDBDBD;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.sp{padding:0 16px}
+.dd{display:flex;justify-content:space-between;align-items:center;width:calc(100% - 32px);margin:0 16px;height:52px;border:1px solid var(--c-strong);border-radius:var(--r-md);background:#fff;padding:0 16px;font-size:16px;color:var(--c-text3);cursor:pointer;text-align:left}
+.dd.open{border-color:var(--c-act);border-bottom-color:var(--c-line);border-radius:var(--r-md) var(--r-md) 0 0;color:var(--c-text)}
+.dd svg{width:20px;height:20px;stroke:#444;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.lw{margin:0 16px 12px;border:1px solid var(--c-act);border-top:0;border-radius:0 0 var(--r-md) var(--r-md);overflow-y:auto;min-height:0;flex:1}
+.band{font-size:12px;line-height:18px;font-weight:600;color:var(--c-info);background:var(--c-infobg);padding:8px 14px}
+.orow{display:flex;gap:14px;padding:14px;border-bottom:1px solid var(--c-line);width:100%;background:none;border-left:0;border-right:0;border-top:0;text-align:left;font-size:14px;color:var(--c-text);cursor:pointer}
+.orow:last-child{border-bottom:0}
+.orow.nb{cursor:default}
+.th{flex:none;width:52px;height:68px;border-radius:var(--r-sm);position:relative;overflow:hidden}
+.th::after{content:"";position:absolute;left:8px;right:8px;top:6px;bottom:6px;background:rgba(255,255,255,.55);border-radius:3px}
+.oi{flex:1;min-width:0}
+.on{font-size:15px;line-height:22px}
+.op{margin-top:2px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.op .off{color:var(--c-off);font-weight:700;font-size:16px}
+.op b{font-size:16px;font-weight:700}
+.orow.out .on,.orow.out .op b{color:#A6A6A6}
+.orow.out .op .off{color:#E3A9AF}
+.oa{display:flex;align-items:center;gap:6px;margin-top:8px;flex-wrap:wrap}
+.oa .sm{min-height:40px;padding:0 14px;font-size:13px}
+.oa .txt{min-height:40px}
+.rs{display:flex;align-items:center;flex:none;align-self:center}
+.sel{margin:12px 16px 0;background:var(--c-subtle);border-radius:var(--r-md);padding:14px 16px}
+.sel .t{display:flex;justify-content:space-between;gap:8px;font-size:15px;line-height:22px}
+.sel .x{border:0;background:none;width:32px;height:32px;font-size:20px;color:#444;cursor:pointer;margin:-4px -8px 0 0;flex:none}
+.sel .b{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.step{display:flex;border:1px solid var(--c-strong);border-radius:var(--r-sm);background:#fff}
+.step button{width:44px;height:40px;border:0;background:none;font-size:20px;color:#333;cursor:pointer}
+.step span{width:44px;display:grid;place-items:center;border-left:1px solid var(--c-strong);border-right:1px solid var(--c-strong);font-size:14px}
+.tot{display:flex;justify-content:space-between;align-items:baseline;padding:22px 16px 16px;font-size:15px}
+.tot b{font-size:18px;font-weight:700}
+.ck{display:flex;gap:12px;align-items:center;padding:14px 16px;border-top:1px solid var(--c-line);font-size:16px}
+.ck i{flex:none;width:36px;height:36px;border-radius:var(--r-sm);background:var(--c-act);display:grid;place-items:center}
+.ck i svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.addr{padding:14px 16px;border-top:1px solid var(--c-line);font-size:15px}
+.addr .r{display:flex;justify-content:space-between;align-items:center}
+.addr strong{font-size:18px;font-weight:600;margin-right:8px}
+.addr .chip{background:var(--c-line);color:var(--c-text2);font-size:13px;border-radius:var(--r-sm);padding:2px 8px;vertical-align:middle}
+.addr p{margin:8px 0 0;font-size:14px;color:var(--c-text2)}
+.addr .ch{border:0;background:none;color:var(--c-text3);font-size:14px;min-height:44px;cursor:pointer;margin:-10px -4px -10px 0}
+.card{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--c-strong);border-radius:var(--r-lg);padding:16px;margin-top:10px;cursor:pointer;font-size:14px;color:var(--c-text)}
+.card b{font-size:16px;font-weight:600}
+.card p{margin:4px 0 0;font-size:13px;line-height:18px;color:var(--c-text2)}
+h4{margin:0 0 4px;font-size:14px;font-weight:600}
+.sec-t{font-size:16px;font-weight:600;line-height:24px;margin:20px 0 8px}
+.row{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.box{background:var(--c-subtle);border-radius:var(--r-lg);padding:14px 16px}
+.opt-pick{display:flex;gap:12px;align-items:center;padding:12px;background:var(--c-subtle);border-radius:var(--r-lg)}
+.opt-pick .th{width:40px;height:52px}
+.opt-pick b{font-weight:600;font-size:14px}
+.opt-pick span.s{font-size:12px;color:var(--c-text2);display:block}
+.srch{width:100%;height:48px;border:1px solid var(--c-strong);border-radius:var(--r-md);padding:0 14px;font:400 14px var(--font);color:var(--c-text);background:#fff}
+.store{padding:14px 0;border-top:1px solid var(--c-line)}
+.store.sl{background:var(--c-subtle);margin:0 -16px;padding:14px 16px}
+.store .n{font-weight:600}
+.store .a{font-size:12px;line-height:18px;color:var(--c-text3);margin:0 0 8px}
+.cmp{width:100%;border-collapse:collapse;font-size:13px}
+.cmp th,.cmp td{border-top:1px solid var(--c-line);padding:10px 8px;text-align:left;white-space:normal;font-weight:400;vertical-align:top}
+.cmp thead th{border-top:0;font-size:12px;color:var(--c-text3)}
+.cmp tbody th{color:var(--c-text2);width:64px}
+.bul{margin:0;padding-left:16px;font-size:13px;line-height:20px;color:var(--c-text2)}
+.bul li+li{margin-top:6px}
+.rtop{display:flex;justify-content:space-between;align-items:center;padding:8px 8px 4px 16px;font-size:20px;font-weight:700}
+.rtop .ib svg{width:22px;height:22px}
+.rp{display:flex;gap:12px;margin:16px 16px 0}
+.rp .th{width:76px;height:76px;flex:none}
+.fake{height:44px;border:1px solid var(--c-strong);border-radius:var(--r-md);padding:0 14px;display:flex;align-items:center;font-size:15px;margin-top:8px}
+.toast{position:absolute;left:16px;right:16px;bottom:96px;background:rgba(17,17,17,.92);color:#fff;border-radius:var(--r-md);padding:12px 14px;font-size:13px;z-index:5}
+.lbl{position:absolute;top:34px;right:10px;background:#111;color:#fff;font-size:11px;font-weight:600;border-radius:var(--r-sm);padding:2px 8px;z-index:3}
+.lbl.to{background:var(--c-info)}
+</style>
+
+<h1>오늘드림 품절 이후 구매 경험 · 모바일 시안 v3</h1>
+<p class="lede">제공해 주신 실제 올리브영 앱 화면(상품 상세, 옵션 바텀시트, 재입고 알림 시트)을 기준으로 다시 그렸어요. 배지와 버튼에서 아이콘을 빼고 문구만 남겼습니다. 상품 이미지와 매장, 날짜는 시안용 예시이고, 비공식 개선안입니다.</p>
+<div class="tabs" role="tablist" id="tabs"></div>
+<div class="stage" id="stage">
+  <div class="phone" id="phone" aria-live="polite"></div>
+  <div class="note" id="note"></div>
+</div>
+
+<script>
+const T=[
+ ["asis","AS-IS","기존 옵션 선택","실제 앱 화면이에요. 품절 옵션은 흐리게 처리되고 <b>일시품절</b> 배지와 <b>재입고 알림</b> 버튼만 있어서, 오늘드림만 안 되는지 다른 방법이 있는지 알기 어려워요."],
+ ["tobe","TO-BE 옵션","개선 옵션 선택","같은 구조에서 품절 옵션을 흐리게 만들지 않고 상태를 문구로 밝혀요. 품절 옵션 아래에 <b>구매 방법</b> 버튼 하나를 주 행동으로, <b>재입고 알림</b>을 보조로 뒀어요. 가능한 옵션을 눌러 수량까지 확인해 보세요.<ul><li>오늘드림 일시품절 → 구매 방법</li><li>전체 품절 → 재입고 알림</li><li>조회 실패 → 다시 확인</li></ul>"],
+ ["alt","구매 방법","다른 구매 방법 확인","오늘드림 불가 안내가 먼저, 그 아래에 일반배송·매장 픽업·비슷한 상품이 나와요. 자동 전환 없이 직접 고릅니다."],
+ ["ship","일반배송","일반배송 확인","재고를 조회해 확인된 값만 보여주고 오늘드림과 나란히 비교해요. 하단 버튼은 앱의 결제 버튼처럼 금액을 넣었어요."],
+ ["pick","매장 픽업","픽업 매장 선택","재고 확인 전에는 ‘재고 확인 필요’로 두고 픽업 가능이라고 단정하지 않아요."],
+ ["rest","재입고 알림","재입고 알림 신청","실제 앱처럼 시트로 열려요. 옵션 선택, 유의사항, 취소/알림 받기 버튼 구성을 유지하고, 신청 뒤에는 ‘알림 설정됨’ 상태를 남겨요."],
+ ["all","전체 품절","상태 C","모든 구매 방식이 품절로 확인된 옵션이에요. 주 행동은 재입고 알림 하나예요."],
+ ["err","조회 실패","상태 D","네트워크 실패를 품절로 오인하지 않게 따로 표시하고 ‘다시 확인’을 줘요."],
+ ["|"],
+ ["tok","디자인 토큰","적용한 토큰",""],
+ ["ref","레퍼런스","참고 화면",""]
+];
+const O={
+ m:{n:"마데카소사이드 흔적리페어 10+1매",st:"ok",tint:"#9AC9C4"},
+ r:{n:"로제 PDRN 모공결광 10+1매",st:"ok",tint:"#E58AA0"},
+ a:{n:"로제 PDRN 모공결광 10매",st:"today",tint:"#F2B3C2"},
+ c:{n:"콜라겐 코어탄력 10매",st:"all",tint:"#F7C9D1"},
+ t:{n:"티트리 진정수분 10매",st:"fail",tint:"#BFD8BD"},
+ h:{n:"히알루론산 고밀도수분 10매",st:"today",tint:"#BFD9EE"},
+ v:{n:"비타민씨 잡티토닝 10매",st:"today",tint:"#F3E3A0"},
+ s:{n:"세라마이드 보습장벽 10매",st:"all",tint:"#F2D9A0"}
+};
+const ORDER=["m","r","a","c","t","h","v","s"];
+let cur="asis",dd=true,sel=null,qty=1,store=null,stock={},alarm={},target="a",rstate="form";
+const $=s=>document.querySelector(s);
+const sb='<div class="sb"><span>10:53</span><span>5G</span></div>';
+const pl=(c,t)=>`<span class="pill ${c}">${t}</span>`;
+const S={bad:t=>pl("bad",t),ok:t=>pl("ok",t),info:t=>pl("info",t),neu:t=>pl("neu",t)};
+const svg=(p,vb="0 0 24 24")=>`<svg viewBox="${vb}" aria-hidden="true">${p}</svg>`;
+const I={back:svg('<path d="M15 5l-7 7 7 7"/>'),search:svg('<circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5"/>'),home:svg('<path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/>'),bag:svg('<path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 016 0v2"/>'),heart:svg('<path d="M12 20s-7-4.5-7-10a4 4 0 017-2.5A4 4 0 0119 10c0 5.500-7 10-7 10z"/>'),share:svg('<path d="M12 15V4M8 8l4-4 4 4M6 12v8h12v-8"/>'),chd:svg('<path d="M6 9l6 6 6-6"/>'),chu:svg('<path d="M6 15l6-6 6 6"/>'),check:svg('<path d="M5 12.500l4.500 4.500L19 7.500"/>'),x:svg('<path d="M6 6l12 12M18 6L6 18"/>'),
+ gdn:'<svg viewBox="0 0 36 12" aria-hidden="true"><path d="M4 3l14 6 14-6"/></svg>',gup:'<svg viewBox="0 0 36 12" aria-hidden="true"><path d="M4 9l14-6 14 6"/></svg>'};
+const th=k=>`<div class="th" style="background:${O[k].tint}"></div>`;
+const PD=`<div class="scr">${sb}<div class="tb"><button class="ib" tabindex="-1">${I.back}</button><div class="r"><span class="ib">${I.search}</span><span class="ib">${I.home}</span><span class="ib">${I.bag}</span></div></div><div class="hero">상품 이미지 (시안)</div><div class="pinfo"><div class="br"><span>메디힐 ›</span><span class="r" style="display:flex">${I.heart.replace("<svg","<svg width=24 height=24 style=\"stroke:#111;fill:none;stroke-width:1.8;margin-right:14px\"")}${I.share.replace("<svg","<svg width=24 height=24 style=\"stroke:#111;fill:none;stroke-width:1.8\"")}</span></div><div class="nm">[11월 올영픽/15년 연속 1위] 메디힐 에센셜 마스크팩 10/10+1매 기획 7종 골라담기</div></div></div>`;
+const price=`<span class="off">50%</span><b>10,000원</b>`;
+const alarmUI=k=>alarm[k]==="on"?S.ok("알림 설정됨"):`<button class="txt" data-go="rest" data-opt="${k}">재입고 알림</button>`;
+function orow(k,mode){
+ const o=O[k];
+ if(mode==="asis"){
+  if(o.st==="ok") return `<div class="orow nb">${th(k)}<div class="oi"><div class="on">${o.n}</div><div class="op">${price}${pl("pink","오늘드림")}</div></div></div>`;
+  return `<div class="orow out nb">${th(k)}<div class="oi"><div class="on">${o.n}</div><div class="op">${price}${pl("gray","일시품절")}</div></div><div class="rs"><button class="sm sec" data-go="rest" data-opt="${k}">재입고 알림</button></div></div>`;
+ }
+ let st=o.st; if(k==="t") st=stock.recheck==="ok"?"today":"fail";
+ const ld=k==="t"&&stock.recheck==="load";
+ const head=`<div class="oi"><div class="on">${o.n}</div><div class="op">${price}</div>`;
+ if(st==="ok") return `<button class="orow" data-pick="${k}">${th(k)}${head}<div class="op" style="margin-top:6px">${pl("pink","오늘드림")}</div></div></button>`;
+ let tag,acts;
+ if(ld){tag=S.info("구매 가능 여부 확인 중…");acts=`<button class="sm sec" disabled>확인 중…</button>`}
+ else if(st==="fail"){tag=S.neu("재고 정보를 확인하지 못했어요");acts=`<button class="sm sec" data-recheck="1">다시 확인</button>`}
+ else if(st==="today"){tag=S.bad("오늘드림 일시품절");acts=`<button class="sm" data-go="alt" data-opt="${k}">구매 방법</button>${alarmUI(k)}`}
+ else {tag=S.bad("전체 품절");acts=alarm[k]==="on"?S.ok("알림 설정됨"):`<button class="sm sec" data-go="rest" data-opt="${k}">재입고 알림</button>`}
+ return `<div class="orow nb">${th(k)}${head}<div class="op" style="margin-top:6px">${tag}</div><div class="oa">${acts}</div></div></div>`;
+}
+const foot=(disabled)=>`<div class="two" style="padding:0 16px 14px"><button class="btn sec">장바구니</button><button class="btn" ${disabled?"disabled":""}>바로구매</button></div>`;
+function shell(inner,lbl){return `<div style="position:absolute;inset:0">${lbl||""}${PD}<div class="dim"><div class="sheet">${inner}</div></div></div>`}
+function listSheet(keys,mode){
+ return `<div class="grab">${I.gup}</div><div class="dd open" style="cursor:default"><span>옵션을 선택해 주세요</span>${I.chu}</div><div class="lw">${mode==="tobe"?'<div class="band">일부 옵션은 오늘드림으로 받을 수 없어요</div>':""}${keys.map(k=>orow(k,mode)).join("")}</div>`;
+}
+function closedSheet(){
+ const o=sel?O[sel]:null;
+ return `<div class="grab" data-dd="1" style="cursor:pointer">${I.gdn}</div><button class="dd" data-dd="1"><span>옵션을 선택해 주세요</span>${I.chd}</button>
+ ${o?`<div class="sel"><div class="t"><span>${o.n} ${pl("pink","오늘드림")}</span><button class="x" data-x="1" aria-label="선택 해제">×</button></div><div class="b"><div class="step"><button data-q="-1" aria-label="수량 줄이기">−</button><span>${qty}</span><button data-q="1" aria-label="수량 늘리기">+</button></div><b style="font-size:16px">${(qty*10000).toLocaleString()}원</b></div></div>`:""}
+ <div class="tot"><span>구매수량 <b style="font-size:15px">${o?qty:0}개</b></span><b>총 ${o?(qty*10000).toLocaleString():0}원</b></div>
+ <div class="ck"><i>${I.check}</i><span>오늘드림 또는 픽업으로 받아보시겠어요?</span></div>
+ <div class="addr"><div class="r"><div><strong>우리집</strong><span class="chip">기본배송지</span></div><button class="ch">변경</button></div><p>도로명 : 서울 ○○구 ○○로 00 (시안 예시)</p></div>
+ ${foot(!o)}`;
+}
+const head=(t,back)=>`${sb}<div class="tb"><button class="ib" data-go="${back}" aria-label="이전 화면">${I.back}</button><b style="font-size:16px;font-weight:600">${t}</b><span style="width:44px"></span></div>`;
+const pk=()=>`<div class="opt-pick">${th(target)}<div style="flex:1;min-width:0"><b>${O[target].n}</b><span class="s">수량 1개 · 10,000원</span></div>${S.bad("오늘드림 일시품절")}</div>`;
+function build(id){
+ const lbl=id==="asis"?'<span class="lbl">AS-IS</span>':'<span class="lbl to">TO-BE</span>';
+ if(id==="asis") return shell(listSheet(ORDER,"asis")+`<div style="height:12px"></div>`,lbl);
+ if(id==="tobe") return shell(dd?listSheet(ORDER,"tobe")+'<div style="height:12px"></div>':closedSheet(),lbl);
+ if(id==="all") return shell(listSheet(["m","c"],"tobe"),lbl);
+ if(id==="err"){const s=stock.recheck;stock.recheck=undefined;const h=listSheet(["m","t"],"tobe");stock.recheck=s;return shell(h,lbl)}
+ if(id==="alt") return `<div class="scr">${head("다른 구매 방법 확인","tobe")}<div class="body pad">
+  <div class="notice"><b>오늘드림은 현재 이용할 수 없어요</b><p>선택한 배송 조건에서 오늘드림 주문이 어려워요.</p></div>
+  <div style="margin-top:12px">${pk()}</div>
+  <div class="sec-t">지금 구매할 수 있는지 확인해 보세요</div>
+  <button class="card" data-go="ship"><b>일반배송</b><p>배송지 기준으로 재고와 배송 정보를 확인해요</p></button>
+  <button class="card" data-go="pick"><b>매장 픽업</b><p>원하는 매장을 골라 재고를 확인해요</p></button>
+  <button class="card" data-toast="오늘드림 가능한 비슷한 상품을 보여줘요"><b>비슷한 상품 보기</b><p>오늘드림으로 받을 수 있는 상품만 보여줘요</p></button>
+  <div class="sec-t" style="margin-top:22px">기다릴 수 있다면</div>
+  <div class="box row"><div><b style="font-weight:600">오늘드림 재입고 알림</b><div style="font-size:12px;color:var(--c-text2)">다시 판매할 때 알려드려요</div></div>${alarm[target]==="on"?S.ok("알림 설정됨"):`<button class="sm sec" data-go="rest">알림 받기</button>`}</div>
+ </div></div>`;
+ if(id==="ship"){
+  const o=stock.ship==="ok", l=stock.ship==="load";
+  return `<div class="scr">${head("일반배송으로 받아보기","alt")}<div class="body pad">${pk()}
+  <div class="row" style="margin-top:18px"><h4 style="margin:0">배송지</h4><button class="txt" data-toast="배송지 변경 화면으로 이동해요">변경</button></div>
+  <div style="font-size:15px"><b style="font-weight:600">우리집</b> <span class="pill neu">기본배송지</span></div><div style="font-size:12px;color:var(--c-text3)">서울 ○○구 ○○로 (시안 예시)</div>
+  <div class="sec-t">일반배송 재고</div>
+  <div>${o?S.ok("일반배송 구매 가능"):l?S.info("배송 가능 여부 확인 중…"):S.neu("배송 가능 여부 확인 필요")}${o||l?"":` <button class="txt" data-ship="1">재고 확인</button>`}</div>
+  <div class="sec-t">배송 방식 비교</div>
+  <table class="cmp"><thead><tr><th></th><th>오늘드림</th><th>일반배송</th></tr></thead><tbody>
+  <tr><th>상태</th><td>${S.bad("일시품절")}</td><td>${o?S.ok("구매 가능"):"확인 후 표시"}</td></tr>
+  <tr><th>일정</th><td>-</td><td>${o?"11/18(수) 도착 예정":"확인 후 표시"}</td></tr>
+  <tr><th>배송비</th><td>-</td><td>${o?"무료":"확인 후 표시"}</td></tr></tbody></table>
+  <p style="font-size:12px;color:var(--c-text3);margin:8px 0 0">일정과 배송비는 시안 예시 값이에요. 실제 서비스에서는 조회한 값만 보여줘요.</p>
+  </div><div class="foot"><button class="btn" ${o?'data-toast="일반배송으로 구매를 진행해요"':"disabled"}>${o?"10,000원 일반배송으로 구매":"재고 확인 후 구매할 수 있어요"}</button>${o?'<p class="why i">오늘드림이 아닌 일반배송 주문이에요</p>':""}</div></div>`;
+ }
+ if(id==="pick"){
+  const L=[["올리브영 ○○점","서울 ○○구 ○○로 · 0.4km","3개"],["올리브영 홍대타운점","서울 마포구 양화로 · 11km",""],["올리브영 강남본점","서울 강남구 강남대로 · 13km","5개"]];
+  const rows=L.map((s,i)=>{const st=stock["p"+i],on=store===i;
+   const r=st==="load"?S.info("확인 중…"):st==="ok"?S.ok("재고 "+s[2]+" 있음"):st==="no"?S.bad("이 매장은 재고 없음"):S.neu("재고 확인 필요");
+   const b=st==="ok"?`<button class="sm ${on?"":"sec"}" data-store="${i}" aria-pressed="${on}">${on?"선택됨":"이 매장 선택"}</button>`:st==="load"?"":`<button class="sm sec" data-pstock="${i}">${st==="no"?"다시 확인":"재고 확인"}</button>`;
+   return `<div class="store ${on?"sl":""}"><div class="n">${s[0]}</div><div class="a">${s[1]}</div><div class="row"><span>${r}</span>${b}</div></div>`}).join("");
+  return `<div class="scr">${head("픽업할 매장 선택","alt")}<div class="body pad">${pk()}
+  <label for="q" class="sec-t" style="display:block;margin-top:16px">지역 또는 매장 검색</label><input id="q" class="srch" placeholder="예: 성수, 강남역" value="서울"><div style="margin-top:8px">${rows}</div></div>
+  <div class="foot"><button class="btn" ${store!==null?'data-toast="선택한 매장 픽업으로 구매를 진행해요"':"disabled"}>${store!==null?L[store][0]+"에서 픽업 구매":"매장을 선택해 주세요"}</button>${store===null?'<p class="why">재고를 확인한 매장만 선택할 수 있어요</p>':""}</div></div>`;
+ }
+ if(id==="rest"){
+  const done=alarm[target]==="on", ld=rstate==="load";
+  const prod=`<div class="rp">${th(target).replace('class="th"','class="th"')}<div style="flex:1;min-width:0;font-size:14px;line-height:20px"><div>[11월 올영픽/15년 연속 1위] 메디힐 에센셜 마스크팩 10/10+1매 기획 7종 골라담기</div><div class="fake">${O[target].n}</div></div></div>`;
+  const top=t=>`<div class="rtop"><span>${t}</span><button class="ib" data-go="tobe" aria-label="닫기">${I.x}</button></div>`;
+  if(done) return shell(`${top("재입고 알림이 설정됐어요")}<p class="sp" style="margin:12px 16px 0;font-size:16px;line-height:24px">오늘드림으로 다시 판매되면 앱 푸시로 알려드려요.</p>${prod}<div class="box" style="margin:16px"><b style="font-weight:600">설정한 옵션</b><div style="font-size:13px;color:var(--c-text2)">${O[target].n}</div></div><div class="two" style="padding:0 16px 14px"><button class="btn sec" data-cancel="1">알림 해제</button><button class="btn" data-go="tobe">확인</button></div>`);
+  return shell(`${top("오늘드림 재입고 알림 신청")}<p class="sp" style="margin:12px 16px 0;font-size:16px;line-height:24px">오늘드림으로 다시 판매되면<br>앱 푸시 알림을 받으시겠어요?</p>${prod}<div class="box" style="margin:16px"><ul class="bul"><li>알림 발송 시점은 재고 상황에 따라 달라질 수 있어요.</li><li>알림을 받은 뒤에도 다시 품절될 수 있어요.</li><li>신청 내역은 마이페이지에서 확인하고 취소할 수 있어요.</li></ul></div><div class="two" style="padding:0 16px 14px"><button class="btn sec" data-go="tobe">취소</button><button class="btn" data-restock="1" ${ld?"disabled":""}>${ld?"설정 중…":"알림 받기"}</button></div>`);
+ }
+}
+const TOK=[["#111111","action.primary","검은 CTA (앱 화면 관찰)"],["#FFFFFF","bg.canvas",""],["#F7F8F7","bg.subtle",""],["#666666","text.secondary",""],["#8A8A8A","text.tertiary",""],["#EBEBEB","border.default",""],["#DDDDDD","border.strong","보조 버튼"],["#E5427F","tag.todaydream","오늘드림 태그"],["#F2495F","price.discount","할인율"],["#B42318","status.unavailable","품절"],["#FFF3F1","status.unavailable.bg",""],["#167347","status.available","재고 확인됨"],["#2457A7","status.info / focus","안내·포커스"]];
+function panel(id){
+ if(id==="tok") return `<h2>적용한 토큰</h2><p>디자인 시스템 v1.0 토큰에 실제 앱 화면에서 관찰한 값을 겹쳤어요. 주 버튼은 문서의 #2F3030 대신 앱 화면의 검은색(#111)을 썼고, 오늘드림 태그와 할인율은 앱의 분홍·코랄 계열을 따랐어요. 품절 상태색은 문서 값 그대로예요. 값은 스크린샷에서 눈으로 맞춘 근사치라 실제 앱 토큰과 다를 수 있어요.</p>
+  <div class="sw">${TOK.map(t=>`<div><i style="background:${t[0]}"></i><span>${t[1]}<code>${t[0]}${t[2]?" · "+t[2]:""}</code></span></div>`).join("")}</div>
+  <h2>컴포넌트 규격</h2><div class="tw"><table><thead><tr><th>구성</th><th>적용</th></tr></thead><tbody>
+  <tr><td>하단 버튼</td><td>높이 52px · 반반 배치(보조 흰색 테두리 / 주 검정) · radius 8</td></tr>
+  <tr><td>옵션 행 버튼</td><td>높이 40~44px · 구매 방법(검정) / 재입고 알림(텍스트 또는 테두리)</td></tr>
+  <tr><td>배지</td><td>아이콘 없이 문구만 · radius 4 · 12px 600</td></tr>
+  <tr><td>옵션 목록</td><td>썸네일 52×68 · 상품명 15px · 가격 16px 700</td></tr>
+  <tr><td>비활성 버튼</td><td>이유를 아래 문구로 설명</td></tr>
+  <tr><td>화면 폭</td><td>390px 기준, 좌우 여백 16px</td></tr></tbody></table></div>`;
+ return `<h2>기준으로 삼은 화면</h2><p>제공해 주신 실제 앱 화면 7장(홈, 상품 상세, 옵션 시트 접힘/펼침, 품절 옵션 목록, 재입고 알림 시트, 옵션 선택 후)을 기준으로 구조와 위계를 맞췄어요. 상품 이미지는 저작권을 고려해 색 블록으로 대체했어요.</p>
+  <h2>유아이볼 참고 화면</h2>
+  <div class="ref"><a href="https://uibowl.io/name/%EC%98%AC%EB%A6%AC%EB%B8%8C%EC%98%81?patterns=%EA%B0%84%ED%8E%B8%EA%B2%B0%EC%A0%9C&patternName=%EA%B3%84%EC%A2%8C%EB%93%B1%EB%A1%9D" target="_blank" rel="noopener">올리브영 · 주문/결제</a><p>하단 버튼에 금액을 넣고 아래에 작은 안내문을 둠 → 일반배송 버튼에 반영.</p></div>
+  <div class="ref"><a href="https://uibowl.io/name/%EB%9D%BC%EC%9A%B4%EC%A6%88?patterns=%EC%8B%A0%EC%B2%AD%ED%95%98%EA%B8%B0&imgId=cmunlyb2a01nujs04xcc20u6u" target="_blank" rel="noopener">라운즈 · 재입고알림 신청</a><p>유의사항을 불릿으로 정리 → 재입고 알림 시트에 반영.</p></div>
+  <div class="ref"><a href="https://uibowl.io/name/%ED%8F%B4%EC%84%BC%ED%8A%B8?patterns=%EC%84%A4%EC%A0%95&imgId=cmpuv2w5l00fjjo04yqamk0nm" target="_blank" rel="noopener">폴센트 · 알림 설정</a><p>설정 상태가 화면에 남음 → 신청 뒤 ‘알림 설정됨’과 알림 해제 버튼으로 반영.</p></div>
+  <div class="ref"><a href="https://uibowl.io/name/%ED%8F%AC%EC%8A%A4%ED%8B%B0?patterns=%EC%83%81%EC%84%B8%EC%A0%95%EB%B3%B4%20%28PDP%29&imgId=cmukh0sr8001vl904hnsq05xs" target="_blank" rel="noopener">포스티 · 상세 옵션 바텀시트</a><p>시트 상단 안내 띠 → 옵션 목록 맨 위 안내 띠로 반영.</p></div>`;
+}
+function render(){
+ $("#tabs").innerHTML=T.map(t=>t[0]==="|"?'<span class="sep"></span>':`<button role="tab" aria-selected="${t[0]===cur}" data-tab="${t[0]}">${t[1]}</button>`).join("");
+ const t=T.find(x=>x[0]===cur),w=cur==="tok"||cur==="ref";
+ $("#phone").hidden=w;
+ const n=$("#note");n.className=w?"wide":"note";
+ n.innerHTML=w?panel(cur):`<b>${t[2]}</b><p>${t[3]}</p>`;
+ if(!w)$("#phone").innerHTML=build(cur);
+}
+function go(id){cur=id;dd=true;render();try{history.replaceState(null,"","#"+id)}catch(e){}}
+function toast(m){const e=document.createElement("div");e.className="toast";e.setAttribute("role","status");e.textContent=m;$("#phone").appendChild(e);setTimeout(()=>e.remove(),1800)}
+function later(fn,ms){setTimeout(()=>{fn();render()},ms)}
+document.addEventListener("click",e=>{
+ const b=e.target.closest("[data-tab],[data-go],[data-toast],[data-recheck],[data-ship],[data-pstock],[data-store],[data-restock],[data-cancel],[data-dd],[data-pick],[data-q],[data-x]");if(!b)return;
+ const d=b.dataset;
+ if(d.opt)target=d.opt;
+ if(d.tab)return go(d.tab);
+ if(d.go)return go(d.go);
+ if(d.toast)return toast(d.toast);
+ if(d.dd){dd=!dd;return render()}
+ if(d.pick){sel=d.pick;dd=false;qty=1;return render()}
+ if(d.q){qty=Math.max(1,Math.min(5,qty+ +d.q));return render()}
+ if(d.x){sel=null;return render()}
+ if(d.recheck){stock.recheck="load";render();return later(()=>stock.recheck="ok",1100)}
+ if(d.ship){stock.ship="load";render();return later(()=>stock.ship="ok",1100)}
+ if(d.pstock!==undefined){const i=d.pstock;stock["p"+i]="load";render();return later(()=>stock["p"+i]=i==="1"?"no":"ok",1000)}
+ if(d.store!==undefined){store=+d.store;return render()}
+ if(d.restock){rstate="load";render();return later(()=>{alarm[target]="on";rstate="form"},1000)}
+ if(d.cancel){delete alarm[target];return render()}
+});
+const h=location.hash.slice(1);if(T.some(t=>t[0]===h))cur=h;
+render();
+</script>
