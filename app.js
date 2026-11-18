@@ -267,7 +267,7 @@ class Component extends DCLogic {
       restockOption: st.optSel === 'C' ? '콜라겐 코어탄력 10매' : '로제 PDRN 모공결광 10매',
       restocked: st.restocked,
       restockTap: () => { if (!this.state.restocked) this.setState({ screen: 'restock' }); },
-      restockLinkText: st.restocked ? '알림 신청됨' : '재입고 알림',
+      restockLinkText: st.restocked ? '알림 신청됨' : '재입고 알림 받기',
       restockLinkStyle: 'height:44px;padding:0 6px;border:0;background:none;font-size:14px;font-family:inherit;' + (st.restocked ? 'color:#1D7A4C;font-weight:600' : 'color:#5E636B;text-decoration:underline;text-underline-offset:3px'),
       radioDis: rDis,
       stdLoading: stdLoading, stdFail: stdFail, stdOk: stdOk, stdSelected: stdSel,
