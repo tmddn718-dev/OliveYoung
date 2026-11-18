@@ -368,7 +368,11 @@ class Component extends DCLogic {
   };
   comp._render();
 
+  // 다른 페이지의 iframe 안에서 열리면 틀·그림자·축소 없이 390×844로 꽉 채워요.
+  const embedded = window.self !== window.top;
+  if (embedded) document.documentElement.classList.add('embedded');
   function fit() {
+    if (embedded) return;
     const s = Math.min(1, (window.innerHeight - 24) / 844, (window.innerWidth - 8) / 390);
     frame.style.transform = 'scale(' + s + ')';
     frame.style.margin = ((844 * s - 844) / 2) + 'px ' + ((390 * s - 390) / 2) + 'px';
