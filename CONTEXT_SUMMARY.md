@@ -19,7 +19,7 @@
 - P0 옵션 시트 6: `OptionsA`(미선택) `B`(구매 가능 선택) `C`(오늘드림 품절 선택) `E`(조회 실패) `F`(조회 중) `G`(알림 신청됨). `OptionsD`(전체 품절 선택)는 삭제됨.
 - P1 다른 구매 방법 6: `AltLoading`, `AltFail`, `AltPickup`, `AltMethods`, `AltMethodsNone`, `AltQty`(수량 초과).
 - P2~P3: `Pickup`, `PickupEmpty`, `StockChanged`, `Restock`, `RestockDone`.
-- 그 외: `Cart`, `CheckoutSlot`, `CheckoutTobe`(기본), `CheckoutTobeOpen`(펼침), `DetailCollapsed`, `DetailExpanded`, `Compare`(AS-IS/TO-BE 여정), `Components`(버튼·상태). 보드 크기는 대부분 390×844(`CheckoutTobeOpen` 1380, `Compare` 860×620). 캔버스 메모에 검증 과제 6개, 수정 이유, 레퍼런스, 한계를 적어 두었다.
+- 그 외: `Cart`, `CheckoutTobe`(기본·접힘), `CheckoutTobeOpen`(펼침: 배송 시간별 배송비 포함 — 별도 `CheckoutSlot` 보드는 2026-11-22에 이 화면으로 합쳐 삭제), `DetailCollapsed`, `DetailExpanded`, `Compare`(AS-IS/TO-BE 여정), `Components`(버튼·상태). 보드 크기는 대부분 390×844(`CheckoutTobeOpen` 1380, `Compare` 860×620). 캔버스 메모에 검증 과제 6개, 수정 이유, 레퍼런스, 한계를 적어 두었다.
 
 ## 4. 설계 원칙 (확정)
 - **옵션 선택형 리스트 + 하단 고정 CTA**: 옵션 행에는 버튼을 두지 않고, 선택한 옵션에 맞는 안내 한 줄과 52px 버튼 하나를 하단에 고정한다. 하단에는 선택한 옵션명 요약도 둔다.

@@ -44,16 +44,9 @@
       "y": 2300,
       "title": "AS-IS 주문/결제 ① 배송지 · 12:45 선택"
     },
-    "CheckoutSlot.dc.html": {
-      "h": 844,
-      "title": "배송 날짜·시간대별 배송비",
-      "w": 390,
-      "x": 470,
-      "y": 7792
-    },
     "CheckoutTobe.dc.html": {
       "h": 844,
-      "title": "주문/결제 3그룹 (기본)",
+      "title": "주문/결제 3그룹 · 기본(접힘)",
       "w": 390,
       "x": 0,
       "y": 8896
@@ -137,8 +130,8 @@
       "y": 6688
     },
     "CheckoutTobeOpen.dc.html": {
-      "h": 1380,
-      "title": "주문/결제 3그룹 (펼침)",
+      "h": 1444,
+      "title": "주문/결제 3그룹 · 펼침 (배송 시간별 배송비)",
       "w": 390,
       "x": 470,
       "y": 8896
@@ -337,8 +330,8 @@
     },
     "t3": {
       "kind": "title1",
-      "maxW": 860,
-      "text": "무료배송과 배송 시간별 배송비",
+      "maxW": 390,
+      "text": "장바구니 무료배송 안내",
       "w": 240,
       "x": 0,
       "y": 7532
@@ -346,7 +339,7 @@
     "t4": {
       "kind": "title1",
       "maxW": 1880,
-      "text": "결제 정보 구조와 상세 하단 패널",
+      "text": "주문/결제 (접힘 ↔ 펼침 한 화면)과 상세 하단 패널",
       "w": 240,
       "x": 0,
       "y": 8636
@@ -450,7 +443,6 @@
     "Restock.dc.html",
     "RestockDone.dc.html",
     "Cart.dc.html",
-    "CheckoutSlot.dc.html",
     "CheckoutTobe.dc.html",
     "CheckoutTobeOpen.dc.html",
     "DetailCollapsed.dc.html",
