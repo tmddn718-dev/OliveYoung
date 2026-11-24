@@ -228,7 +228,8 @@ class Component extends DCLogic {
     const regionDefault = qNow === '' || qNow === '서울 구로구';
     const areaTitle = regionDefault ? '서울 구로구 주변 매장' : '‘' + qNow + '’ 검색 결과';
     const areaSub = stores.length + '곳 중 픽업 주문 가능 ' + cnt.ok + '곳';
-    const productName = isC ? '마데카소사이드 흔적리페어 10+1매' : '로제 PDRN 모공결광 10매';
+    const isMade = isC || st.optSel === 'A';
+    const productName = isMade ? '마데카소사이드 흔적리페어 10+1매' : '로제 PDRN 모공결광 10매';
     const recImg = { r1: IMG.rose, r2: IMG.tea };
     const addedItems = recDefs.filter((r) => st.recs[r.id]).map((r) => ({ name: r.name, img: recImg[r.id], priceText: fmt(r.price), remove: () => { const n = Object.assign({}, this.state.recs); n[r.id] = false; this.setState({ recs: n }); } }));
     const recs = recDefs.map((r) => {
@@ -360,7 +361,7 @@ class Component extends DCLogic {
       ctaTap: () => { if (stdSel) this.setState({ method: 'standard', screen: 'checkout' }); else if (pickSel) this.setState({ method: 'pickup', screen: 'checkout' }); },
       stores: stores, storeChips: storeChips, storeGroups: storeGroups, emptyFilter: stores.length > 0 && storeGroups.length === 0, showAllStores: () => this.setState({ storeFilter: 'all' }), storeAllFailed: storeAllFailed, hasStores: stores.length > 0, noResults: stores.length === 0, query: st.query,
       searchKey: (e) => { if (e.key === 'Enter') { e.preventDefault(); this.applyQuery(e.target.value.trim()); e.target.blur(); } }, searchChange: (e) => { this.applyQuery(e.target.value.trim()); }, clearQuery: () => this.applyQuery(''), areaTitle: areaTitle, areaSub: areaSub, storeLoading: !!st.storeLoading, listOpacity: st.storeLoading ? '0.4' : '1', storeBottom: storeAllFailed ? '196px' : '0px', storeAddr: st.pickStore ? sAddr[st.pickStore].split(' · ')[0] : '', pickPriceText: fmt(10000 * st.qty), isRecheck: sc === 'pickRecheck', isPickConfirm: sc === 'pickConfirm', pickConfirmBack: () => this.setState({ screen: 'store' }), pickConfirmChange: () => this.setState({ screen: 'store', returnTo: 'alt' }), pickContinue: () => this.setState({ method: 'pickup', screen: 'checkout', intent: 'buy' }), changeRegion: () => this.applyQuery(''), recheckAll: () => this.setState({ stores: { E: 'fail', F: 'closed' }, dTried: false }),
-      productName: productName, productImg: isC ? IMG.made : IMG.roseS,
+      productName: productName, productImg: isMade ? IMG.made : IMG.roseS,
       freeShip: free, notFree: !free,
       remainText: fmt(Math.max(0, 30000 - subtotal)),
       progressPct: +Math.min(100, subtotal / 300).toFixed(1) + '%',
